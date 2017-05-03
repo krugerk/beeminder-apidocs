@@ -1,5 +1,5 @@
 # Markdown
-set :markdown_engine, :redcarpet
+set :markdown_engine, :maruku
 set :markdown,
     fenced_code_blocks: true,
     smartypants: true,
@@ -14,6 +14,9 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 set :fonts_dir, 'fonts'
+
+# Reload the browser automatically whenever files change
+activate :livereload
 
 # Activate the syntax highlighter
 activate :syntax

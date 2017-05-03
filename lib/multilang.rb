@@ -8,5 +8,8 @@ module Multilang
   end
 end
 
-require 'middleman-core/renderers/redcarpet'
-Middleman::Renderers::MiddlemanRedcarpetHTML.send :include, Multilang
+#require 'middleman-core/renderers/redcarpet'
+#Middleman::Renderers::MiddlemanRedcarpetHTML.send :include, Multilang
+
+#require 'middleman-core/renderers/maruku'
+#Middleman::Renderers::Maruku.send :include, Multilang
