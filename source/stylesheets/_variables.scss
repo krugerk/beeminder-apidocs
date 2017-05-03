@@ -68,9 +68,9 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 // FONTS
 ////////////////////
 %default-font {
-  // Changing the font to emulate Stripe...
+  // Original font declaration from Slate 
   //font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
-  //font-size: 13px;
+  // Stripe's font declarations from Stripe's docs
   font-family: "Whitney SSm A", "Whitney SSm B", Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
