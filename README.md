@@ -1,14 +1,7 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/lord/img/master/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
-  <br>
-  <a href="https://travis-ci.org/lord/slate"><img src="https://travis-ci.org/lord/slate.svg?branch=master" alt="Build Status"></a>
-</p>
+Beeminder API Documentation
+---------------------------
 
-<p align="center">Slate helps you create beautiful, intelligent, responsive API documentation.</p>
-
-<p align="center"><img src="https://raw.githubusercontent.com/lord/img/master/screenshot-slate.png" width=700 alt="Screenshot of Example Documentation created with Slate"></p>
-
-<p align="center"><em>The example above was created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
+<p align="center"><em>The Beeminder api docs are created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
 
 To Do
 ------------
@@ -22,8 +15,13 @@ To Do
 * smaller / better logo?
 * Doesn't actually say "Beeminder API Documentation" anywhere yet 
 
-Getting Started with Slate
+Contributing 
 ------------------------------
+
+If you're working on building something with our API and you run into confusion, we'd love to hear about it!
+If something's not clear in the docs, or something's not working as you expect it to, it might be us, not you!
+If you do find something that needs clarification or is just plain wrong, we'd love a pull request with fixes or edits. 
+
 
 ### Prerequisites
 
@@ -51,54 +49,13 @@ vagrant up
 
 You can now see the docs at http://localhost:4567. Whoa! That was fast!
 
-Now that Slate is all set up on your machine, you'll probably want to learn more about [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax), or [how to publish your docs](https://github.com/lord/slate/wiki/Deploying-Slate).
+### Submitting 
 
-If you'd prefer to use Docker, instructions are available [in the wiki](https://github.com/lord/slate/wiki/Docker).
-
-Companies Using Slate
----------------------------------
-
-* [NASA](https://api.nasa.gov)
-* [IBM](https://docs.cloudant.com/api.html)
-* [Sony](http://developers.cimediacloud.com)
-* [Mozilla](http://localforage.github.io/localForage/)
-* [Best Buy](https://bestbuyapis.github.io/api-documentation/)
-* [Travis-CI](https://docs.travis-ci.com/api/)
-* [Greenhouse](https://developers.greenhouse.io/harvest.html)
-* [Woocommerce](http://woocommerce.github.io/woocommerce-rest-api-docs/)
-* [Appium](http://appium.io/slate/en/master)
-* [Dwolla](https://docs.dwolla.com/)
-* [Clearbit](https://clearbit.com/docs)
-* [Coinbase](https://developers.coinbase.com/api)
-* [Parrot Drones](http://developer.parrot.com/docs/bebop/)
-* [Fidor Bank](http://docs.fidor.de/)
-* [Scale](https://docs.scaleapi.com/)
-
-You can view more in [the list on the wiki](https://github.com/lord/slate/wiki/Slate-in-the-Wild).
+Once you've made your changes, you can submit a pull request to beeminder/slate!
 
 Need Help? Found a bug?
 --------------------
 
-[Submit an issue](https://github.com/lord/slate/issues) to the Slate Github if you need any help. And, of course, feel free to submit pull requests with bug fixes or changes.
+[Submit an issue](https://github.com/beeminder/slate/issues), or email support@beeminder.com if you need any help.
 
-Contributors
---------------------
 
-Slate was built by [Robert Lord](https://lord.io) while interning at [TripIt](https://www.tripit.com/).
-
-Thanks to the following people who have submitted major pull requests:
-
-- [@chrissrogers](https://github.com/chrissrogers)
-- [@bootstraponline](https://github.com/bootstraponline)
-- [@realityking](https://github.com/realityking)
-- [@cvkef](https://github.com/cvkef)
-
-Also, thanks to [Sauce Labs](http://saucelabs.com) for helping sponsor the project.
-
-Special Thanks
---------------------
-- [Middleman](https://github.com/middleman/middleman)
-- [jquery.tocify.js](https://github.com/gfranko/jquery.tocify.js)
-- [middleman-syntax](https://github.com/middleman/middleman-syntax)
-- [middleman-gh-pages](https://github.com/edgecase/middleman-gh-pages)
-- [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
