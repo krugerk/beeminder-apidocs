@@ -3,7 +3,6 @@ title: Beeminder API Reference
 
 language_tabs:
   - curl 
-  - ruby
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -14,268 +13,1039 @@ includes:
 
 search: true
 ---
-# This doc is under development
 
-You can find the [real, published Beeminder API Docs](https://www.beeminder.com/api) on our website.
 
-## I repeat, the complete API docs are at [beeminder.com/api](https://www.beeminder.com/api)
+# Introduction {#introduction}
 
-# API Reference 
-## Welcome 
-In case you’re here to automate adding data to Beeminder, there’s a good chance we’ve got you covered with our
+## THIS IS OUT OF DATE
+### SEE [BEEMINDER.COM/API](https://www.beeminder.com/api) for the current docs
+
+I just pulled this over from an out of date Markdown-ified version of the Beeminder API docs. Now that everything is mostly pulled in here and formatted in some reasonable way, I still need to bring it fully up to date with the current, published docs at [beeminder.com/api](https://www.beeminder.com/api ).
+
+## Now, the real intro
+
+In case you're here to automate adding data to Beeminder, there's a good chance we've got you covered with our 
 [Zapier integration](http://beeminder.com/zapier "Zapier is a service like IFTTT that connects hundreds of disparate webservices. In the case of Beeminder you can create triggers in other webservices that automatically cause data to be added to Beeminder graphs.")
 or our
 [IFTTT integration](http://ifthisMINDthat.com "IFTTT = If This Then That").
-If you’re looking for ideas for things to do with the Beeminder API, we have a
-[blog post with lots of examples](http://blog.beeminder.com/api This was the blog post that originally announced our API in 2012 but we've updated occasionally since then with links to things people are doing with it").
+If you're looking for ideas for things to do with the Beeminder API, we have a 
+[blog post with lots of examples](http://blog.beeminder.com/api "This was the blog post that originally announced our API in 2012 but we've updated occasionally since then with links to things people are doing with it").
 The
 [tech category of our forum](http://forum.beeminder.com/c/tech "Yay Discourse.org!")
-is a good place to ask questions and show off what you’re working on.
+is a good place to ask questions and show off what you're working on.
 
-
-It’s really important to us that this API be easy for developers to use so please don’t be shy about asking us questions.
+It's really important to us that this API be easy for developers to use so please don't be shy about asking us questions.
 Whether you post in
 [the forum](http://forum.beeminder.com "The above link is the Tech subset of the forum; this link is to the main page for the forum")
-or email us at support@beeminder.com we’ve invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
-So lean on us heavily as you’re hacking away with our API — it helps us a lot when you do!
+or email us at support@beeminder.com we've invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
+So lean on us heavily as you're hacking away with our API -- it helps us a lot when you do!
 
+## Preliminaries
 
-## API Endpoint
-The base URL for all requests is
-`https://www.beeminder.com/api/v1`
+The base URL for all requests is `https://www.beeminder.com/api/v1/`
 
-# Authentication
+You may also consume the Beeminder API via 
+[Mashape](http://mashape.com "Mashape is a hub for cloud APIs (is how Wikipedia puts it)"): 
+&nbsp; &nbsp;
+<span id="mashape-button" data-api="beeminder" data-name="beeminder" data-icon="1"></span>
 
-All API endpoints require authentication.
+[Back to top](#)
+
+# Authentication {#auth}
+
+All API endpoints require authentication. 
 There are two ways to authenticate.
+Both ultimately give you a token which you must then include with every API request.
 
+<aside class="notice">
+Note: A common mistake is to pass the personal auth token but call the parameter access_token, or vice-versa. The parameter name for your personal auth token should be `auth_token`.
+</aside>
 
 ## Personal authentication token
 
 
-> For example, if your username is `alice` and your token is `abc123` you can query information about your `weight` goal like so:
+> For example, if your username is "alice" and your token is "abc123" you can query information about your "weight" goal like so:
 
-```curl
-GET https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
+```json
+  GET https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
 ```
 
-This authentication pattern is for making API calls just to your own Beeminder account.
+This authentication pattern is for making API calls just to your own Beeminder account. 
 
-After you
-[log in to Beeminder](https://www.beeminder.com/users/sign_in),
-visit
-[https://www.beeminder.com/api/v1/auth_token.json](https://www.beeminder.com/api/v1/auth_token.json )
+
+After you 
+[sign in to Beeminder](https://www.beeminder.com/users/sign_in ), 
+visit 
+<a href="https://www.beeminder.com/api/v1/auth_token.json">`https://www.beeminder.com/api/v1/auth_token.json`</a> 
 to get your personal auth token.
-
-Append it to API requests you make as an additional GET or POST parameter `auth_token`.
-
-<aside class="notice">
-Note! a common bit of confusion is mixing up the parameter name. For your personal auth token the parameter name is <code>auth_token</code>. If you try to send a personal auth token as <code>access_token</code> you will get an error. 
-</aside>
+Append it to API requests you make as an additional GET or POST parameter. 
 
 
+## Client Oauth {#oauth}
 
-## Client Oauth
 
-This authentication pattern is for clients (applications) accessing the Beeminder API on a user’s behalf.
-Beeminder implements the
-[OAuth 2](http://oauth.net/ )
+This authentication pattern is for clients (applications) accessing the Beeminder API on a user's behalf.
+Beeminder implements the 
+[OAuth](http://oauth.net/ "Specifically Oauth2") 
 provider protocol to allow access reasonably securely.
-We aren't going to provide a full step-by step tutorial on how to implement an OAuth2 client in this doc.
-If you're not familiar with the OAuth2 authentication flow, first go read 
-[this](https://aaronparecki.com/oauth-2-simplified/ "Aaron literally wrote the book on OAuth2."), or 
-[this](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2 "Anyone notice that Digital Ocean has consistently great tutorials and docs for things?")
-for a more in-depth background. 
 
-Now, once we're all on the same page, here are the things you need to know to build an OAuth2 client with Beeminder.
-
+There are four steps to build a client:
 
 ### 1. Register your app
 
-Register your app at
+Register your app at 
 [beeminder.com/apps/new](https://www.beeminder.com/apps/new ).
 Application name and redirect URL are required.
-The redirect URL is where the user will be sent after authorizing your app.
-You can change this later if you're not sure what it should be right now.
-
-Make sure you copy down the client secret we show you!
+The redirect URL is where the user is sent after authorizing your app.
 
 ### 2. Send your users to the Beeminder authorization URL
 
-> The base URL for Beeminder authorization is
+> Example authorization URL: 
 
-```curl
-https://www.beeminder.com/apps/authorize
+```
+  https://www.beeminder.com/apps/authorize?\ 
+   client_id=xyz456&redirect_uri=http&#58;//foo.com/auth_callback\ 
+   &response_type=token
 ```
 
-> Include the following parameters: 
-```curl
-* <code>client_id</code>: Your application’s client ID.
-* <code>redirect_uri</code>: This is where Beeminder will send the user after they have authorized your app.
-This <em>must match</em> the redirect URL you supplied when you registered your app above.
-Make sure to
-<a href="http://en.wikipedia.org/wiki/Percent-encoding" title="Where you replace characters that have special meaning in URLs with a percent sign and their ascii number (or plus signs for spaces)">url-encode</a>
-this if it contains any special characters like question marks or ampersands.</li>
-<code>response_type</code>: Currently this should just always be set to the value “<code>token</code>”.</li>
+The base URL is the same for all apps: 
+`https://www.beeminder.com/apps/authorize`. 
+You'll need to add the following parameters:
 
-https://www.beeminder.com/apps/authorize?client_id=xyz456&redirect_uri=http://foo.com/auth_callback&response_type=token
+* `client_id`: Your application's client ID. 
+You can see a list of your registered apps and retrieve their `client_id`s at 
+[beeminder.com/apps](https://www.beeminder.com/apps "List of apps you've registered, not to be confused with the list of apps you've authorized to access your Beeminder account, or the list of services you've authorized Beeminder to access").
+* `redirect_uri`: This is where Beeminder will send the user after they have authorized your app. 
+This *must match* the redirect URL you supplied when you registered your app above. 
+Make sure to 
+[url-encode](http://en.wikipedia.org/wiki/Percent-encoding "Where you replace characters that have special meaning in URLs with a percent sign and their ascii number (or plus signs for spaces)") 
+this if it contains any special characters like question marks or ampersands.
+* `response_type`: Currently this should just always be set to the value "`token`".
+
+
+### 3. Receive and store user's access token
+
+> For example, if the user "alice" has access token "abc123" then the following string would be appended to the URL when the user is redirected there:
+
+```json
+  ?access_token=abc123&username=alice
 ```
 
-You will need to redirect your user to your Beeminder authorization URL. The base URL is the same for all apps. You will need to add in your own `client_id`, `redirect_uri`, and `response_type` parameters.
-
-You can see a list of your registered apps and retrieve their `client_id`'s at
-[beeminder.com/apps](https://www.beeminder.com/apps "List of apps you've registered, not to be confused with the list of apps you've authorized to access your Beeminder account, or the list of services you've authorized Beeminder to access")
-
-
-### 3. Receive and store user’s access token
-
-> For example, we might see for user `alice`, the following string appended to the redirect URL: 
-
-```curl
- ?access_token=abc123&username=alice
-```
-
-After the user authorizes your application they’ll be redirected to the `redirect_uri` that you specified, with two additional parameters,
-`access_token` and
-`username`, in the
+After the user authorizes your application they'll be redirected to the `redirect_uri` that you specified, with two additional parameters, 
+`access_token` and 
+`username`, in the 
 [query string](http://en.wikipedia.org/wiki/Query_string "The query string is the parameters that come after the question mark in a URL").
 
-You should set up your server to handle this GET request and have it remember each user’s access token.
-The access token uniquely identifies the user’s authorization for your app.
 
-The username is provided in this response for convenenience.
+You should set up your server to handle this GET request and have it remember each user's access token. 
+The access token uniquely identifies the user's authorization for your app. 
 
+The username is provided here for convenenience. 
+You can retrieve the username for a given access token at any time by sending a GET request for `/api/v1/me.json` with the token appended as a parameter.
 
 ### 4. Include access token as a parameter
 
-> You can literally use `me` in place of the username for any endpoint and it will be macro-expanded to the username of the authorized user.
+```json
+  GET https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
+```
 
-```curl
-  GET https://www.beeminder.com/api/v1/me.json?access_token=abc123
-``` 
+Append the access token as a parameter on any API requests you make on behalf of that user. 
+For example, your first request will probably be to get information about the 
+[User](#user) 
+who just authorized your app and so will look something like this:
 
-Append the access token as a parameter on any API requests you make on behalf of that user.
-For example, your first request will probably be to get information about the
-[User](#user)
-who just authorized your app.
 
+You can literally use "me" in place of the username for any endpoint and it will be macro-expanded to the username of the authorized user.
 
 ### 5. Optional: De-authorization callback
 
+If you provide a Post De-Authorization Callback url when you register your client, we will make a POST to your endpoint when a user removes your app. The POST will include the access_token removed in the body of the request.
 
-```curl
-  POST https://www.yourapp.com/beeminder-deauth\ 
-  -d 'access_token=abc123'
-```
+[Back to top](#)
 
-If you provide a Post De-Authorization Callback URL when you register your client, we will make a `POST` to your endpoint when a user removes your app. The `POST` will include the access_token removed in the body of the request.
+# User Resource {#user}
 
-### 6. Optional: Autofetch callback
+A User object ("object" in the 
+[JSON](http://json.org "JavaScript Objection Notation aka how data is passed around on the internet") 
+sense) includes information about a user, like their list of goals.
 
+### Attributes
 
-```curl
-  POST https://www.yourapp.com/beeminder-autofetch\
-  -d 'username=alice'
-  -d 'slug=weight'
-```
+* `username` (string)
+* `timezone` (string)
+* `updated_at` (number): 
+[Unix timestamp](http://en.wikipedia.org/wiki/Unix_time "Number of seconds since 1970-01-01 at midnight GMT") 
+(in seconds) of the last update to this user or any of their goals or datapoints.
+* `goals` (array): 
+A list of slugs for each of the user's goals, or an array of goal hashes (objects) if `diff_since` or `associations` is sent.
+* `deadbeat` (boolean): 
+True if the user's payment info is out of date, or a an attempted payment has failed.
+* `deleted_goals` (array): 
+An array of hashes, each with one key/value pair for the id of the deleted goal. 
+Only returned if `diff_since` is sent.
 
-The autofetch callback URL is also optional.
-We will `POST` to this URL if provided, including the params `username`, and `slug` when the user wants new data from you.
-E.g., when the user pushes the manual refresh button, or prior to sending alerts to the user, and before derailing the goal at the end of an eep day.
+## Get information about a user {#getuser}
 
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-
-> The above command returns JSON structured like this:
+> Examples
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+  GET /api/v1/users/alice.json?goals_filter=frontburner
+
+  { "username": "alice",
+    "timezone": "America/Los_Angeles",
+    "updated_at": 1343449880,                       
+    "goals": ["gmailzero", "weight"] }
 ```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-
-> The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  GET /api/v1/users/alice.json?diff_since=1352561989
+
+  { "username": "alice",
+    "timezone": "America/Los_Angeles",
+    "updated_at": 1343449880,                       
+    "goals": [ {"slug": "weight", ..., 
+               "datapoints": [{"timestamp": 1325523600,    
+                    "value": 70.45,            
+                    "comment": "blah blah",     
+                    "id": "4f9dd9fd86f22478d3"}, 
+                   {"timestamp": 1325610000,
+                    "value": 70.85,
+                    "comment": "blah blah", 
+                    "id": "5f9d79fd86f33468d4"}], 
+               "title": "Weight Loss", ...}, 
+               { another goal }, ... ],
+    "deleted_goals": [{ "id": "519279fd86f33468ne"}, ... ] 
 }
 ```
 
-This endpoint retrieves a specific kitten.
+### HTTP Request
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+`GET /users/`*u*`.json`
+
+Retrieves information and a list of goalnames for the user with username *u*.
+
+Since appending an `access_token` to the request uniquely identifies a user, you can alternatively make the request to /users/me.json (without the username).
+
+### Parameters
+
+
+* \[`associations`\] (boolean): Convenience method to fetch all information about a user. Please use sparingly and see also the `diff_since` parameter.
+Default: false  
+Send `true` if you want to receive all of the user's goal and datapoints as attributes of the user object.
+
+* \[`diff_since`\] (number): Unix timestamp in seconds.
+Default: null, which will return all goals and datapoints  
+Send a Unix timestamp to receive a filtered list of the user's goals and datapoints. Only goals and datapoints that have been created or updated since the timestamp will be returned.
+Sending `diff_since` implies that you want the user's associations, so you don't need to send both.
+
+* \[`skinny`\] (boolean): Convenience method to only get a subset of goal attributes and the most recent datapoint for the goal.
+Default: false, which will return all goal attributes and all datapoints created or updated since `diff_since`.  
+`skinny` must be sent along with `diff_since`. If `diff_since` is not present, `skinny` is ignored.
+Some goal attributes, as well as fetching all datapoints, can take some additional time to compute on the server side, so you can send `skinny` if you only need the latest datapoint and the following subset of attributes:
+`slug, 
+title,
+description,
+goalval,
+rate,
+goaldate,
+graph_url,
+thumb_url,
+goal_type,
+autodata,
+losedate,
+deadline,
+leadtime,
+alertstart,
+id,
+queued,
+panic,
+updated_at,
+burner,
+yaw,
+lane,
+lanewidth,
+delta,
+runits,
+limsum,
+frozen,
+lost,
+won,
+contract,
+delta_text,
+safebump
+`
+Instead of a `datapoints` attribute, sending `skinny` will replace that attribute with a `last_datapoint` attribute. Its value is a Datapoint hash. 
+
+* \[`datapoints_count`\] (number): number of datapoints.
+Default: null, which will return all goals and datapoints  
+Send a number `n` to only recieve the `n` most recently added datapoints, sorted by `updated_at`. 
+Note that the most recently added datapoint could have been a datapoint whose timestamp is well in the past and therefore before other datapoints in that respect. 
+For example, my datapoints might look like:  
+12 1  
+14 1  
+15 1  
+16 1  
+If I go back and realize that I forgot to enter data on the 13th, the datapoint for the 13th will be sorted ahead of the one on the 16th:  
+12 1  
+14 1  
+15 1  
+16 1  
+13 1  
+
+### Returns
+
+A [User](#user) object.
+
+
+Use the `updated_at` field to be a good Beeminder API citizen and avoid unnecessary requests for goals and datapoints. 
+Any updates to a user, their goals, or any datapoints on any of their goals will cause this field to be updated to the current unix timestamp.
+If you store the returned value and, on your next call to this endpoint, the value is the same, there's no need to make requests to other endpoints.
+
+Checking the timestamp is an order of magnitude faster than retrieving all the data, so it's definitely wise to use this approach.
+
+
+## Authenticate and redirect the user {#redirectuser}
+
+> Examples
+
+```json
+  GET /api/v1/users/alice.json?redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges
+```
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET /users/`*u*`.json`
 
-### URL Parameters
+Attempts to authenticate the user and if successful redirects to the given URL. 
+Allows third-party apps to send the user to a specific part of the website without getting intercepted by a login screen, for doing things not available through the API.
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+### Parameters
+
+* \[`redirect_to_url`\] (string): Url to redirect the user to. 
+
+
+
+[Back to top](#)
+
+
+
+# Goal Resource {#goal}
+
+A Goal object includes the everything about a specific goal for a specific user, including the target value and date, the steepness of the yellow brick road, the graph image, and various settings for the goal.
+
+### Attributes
+
+* `slug` (string): The final part of the URL of the goal, used as an identifier. E.g, if user "alice" has a goal at beeminder.com/alice/weight then the goal's slug is "weight".
+* `updated_at` (number): [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time ) of the last time this goal was updated.
+* `burner` (string): One of `frontburner`, `backburner`. Indicates whether the goal is on the "frontburner" for the user in their gallery or whether the goal has been relegated to the "backburner" (below the fold on the web interface). 
+* `title` (string): The title that the user specified for the goal. E.g., "Weight Loss".
+* `yaxis` (string): The label for the y-axis of the graph. E.g., "Cumulative total hours".
+* `goaldate` (number): Unix timestamp (in seconds) of the goal date.
+* `goalval` (number): Goal value -- the number the yellow brick road will eventually reach. E.g., 70 kilograms.
+* `rate` (number): The slope of the (final section of the) yellow brick road.
+* `graph_url` (string): URL for the goal's graph image. E.g., "http&#58;//static.beeminder.com/alice/weight.png".
+* `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http&#58;//static.beeminder.com/alice/weight-thumb.png".
+* `autodata` (string): The name of automatic data source, if this goal has one. Will be null for manual goals.
+* `goal_type` (string): One of the following symbols:
+ - `hustler`: Do More
+ - `biker`: Odometer
+ - `fatloser`: Weight loss
+ - `gainer`: Gain Weight
+ - `inboxer`: Inbox Fewer
+ - `drinker`: Do Less
+ - `custom`: Full access to the underlying goal parameters
+* `losedate` (number): Unix timestamp of derailment. When you'll be off the road if nothing is reported.
+* `panic` (number): Panic threshold. How long before derailment to panic. Default: 54000 (15 hours).
+* `queued` (boolean): Whether the graph is currently being updated to reflect new data.
+* `secret` (boolean): Whether you have to be signed in as owner of the goal to view it. Default: `false`.
+* `datapublic` (boolean): Whether you have to be signed in as the owner of the goal to view the datapoints. Default: `false`.
+* `datapoints` (array of [Datapoints](#datapoint)): The datapoints for this goal.
+* `numpts` (number): Number of datapoints.
+* `pledge` (number): Amount pledged (USD) on the goal.
+* `initday` (number): Unix timestamp (in seconds) of the start of the yellow brick road.
+* `initval` (number): The y-value of the start of the yellow brick road.
+* `curday` (number): Unix timestamp (in seconds) of the end of the yellow brick road, i.e., the most recent (inferred) datapoint.
+* `curval` (number): The value of the most recent datapoint.
+* `lastday` (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.
+* `runits` (string): Rate units. One of `y`, `m`, `w`, `d`, `h` indicating that the rate of the yellow brick road is yearly, monthly, weekly, daily, or hourly.
+* `yaw` (number): Good side of the road. I.e., the side of the road (+1/-1 = above/below) that makes you say "yay".
+* `dir` (number): Direction the road is sloping, usually the same as yaw.
+* `lane` (number): Where you are with respect to the yellow brick road (2 or more = above the road, 1 = top lane, -1 = bottom lane, -2 or less = below the road).
+* `mathishard` (array of 3 numbers): The goaldate, goalval, and rate -- all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
+* `headsum` (string): Summary of where you are with respect to the yellow brick road, e.g., "Right on track in the top lane".
+* `limsum` (string): Summary of what you need to do to eke by, e.g., "+2 within 1 day".
+* `exprd` (boolean): Exponential road; interpret rate as fractional, not absolute, change.
+* `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
+* `odom` (boolean): Treat zeros as accidental odometer resets.
+* `edgy` (boolean): Put the initial point on the road edge instead of centerline.
+* `noisy` (boolean): Compute road width based on data, not just road rate.
+* `aggday` (string): How to aggregate points on the same day, eg, min/max/mean.
+* `steppy` (boolean): Join dots with purple steppy-style line.
+* `rosy` (boolean): Show the rose-colored dots and connecting line.
+* `movingav` (boolean): Show moving average line superimposed on the data.
+* `aura` (boolean): Show turquoise swath, aka blue-green aura.
+* `frozen` (boolean): Whether the goal is currently frozen and therefore must be restarted before continuing to accept data.
+* `won` (boolean): Whether the goal has been successfully completed.
+* `lost` (boolean): Whether the goal is currently off track.
+* `nomercy` (boolean): Whether to recommit without the usual week of safety buffer, should you derail.
+* `contract` (dictionary): Dictionary with two attributes. `amount` is the amount at risk on the contract, and `stepdown_at` is a Unix timestamp of when the contract is scheduled to revert to the next lowest pledge amount. `null` indicates that it is not scheduled to revert.
+* `road` (array): Array of tuples that can be used to construct the Yellow Brick Road. This field is also known as the road matrix. Each tuple specifies 2 out of 3 of [`time`, `goal`, `rate`]. To construct the road, start with a known starting point (time, value) and then each row of the road matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
+* `roadall` (array): Like `road` but with an additional initial row consisting of [`initday`, `initval`, null] and an additional final row consisting of [`goaldate`, `goalval`, `rate`].
+* `fullroad` (array): Like `roadall` but with the nulls filled in.
+* `rah` (number): Road value (y-value of the centerline of the yellow brick road) at the akrasia horizon (today plus one week).
+* `delta` (number): Distance from the centerline of the yellow brick road to today's datapoint (`curval`).
+* `delta_text` (string): The text that describes how far the goal is from each lane of the road -- orange, blue, green. If the goal is on the good side of a given lane, the "?" character will appear.
+* `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
+* `id` (string of hex digits): Deprecated. We always use user/slug as the goal identifier in the API.
+* `callback_url` (string): Callback URL, as 
+[discussed in the forum](http://forum.beeminder.com/t/webhook-callback-documentation/313 "In short: you can add a callback to your own server whenever data is added on Beeminder"). 
+WARNING: If different apps change this they'll step on each other's toes.
+* `description` (string): Deprecated. User-supplied description of goal (listed in sidebar of graph page as "Goal Statement").
+* `graphsum` (string): Deprecated. Text summary of the graph, not used in the web UI anymore.
+* `lanewidth` (number): Width of the lanes on either side of the centerline of the yellow brick road, i.e., half the road width.
+* `deadline` (number): Seconds by which your deadline differs from midnight. Negative is before midnight, positive is after midnight. 
+Allowed range is -17&#42;3600 to 6&#42;3600 (7am to 6am).
+* `leadtime` (number): Days before derailing we start sending you reminders. Zero means we start sending them on the eep day, when you will derail later that day.
+* `alertstart` (number): Seconds after midnight that we start sending you reminders (on the day that you're scheduled to start getting them, see `leadtime` above).
+* `plotall` (boolean): Whether to plot all the datapoints, or only the `aggday`'d one. So if false then only the official datapoint that's counted is plotted.
+* `ephem` (boolean): Deprecated and should be removed. Whether a goal is a temporary test goal, of which there is no longer any such thing.
+
+
+
+The goal types are shorthand for a collection of settings of more fundamental goal attributes.
+Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
+The following table lists what those attributes are.
+
+`hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
+--------- | ------- | ---------- | -------- | --------- | ---------
+`yaw` | 1 | 1 | -1 | 1 | -1 | -1
+`dir` | 1 | 1 | -1 | 1 | -1 | 1
+`exprd` | false | false| false| false| false| false
+`kyoom`| true| false| false| false| false| true
+`odom` | false |true |false |false |false| false
+`edgy` | false |false |false |false |false |true
+`noisy`| false |false |true |true |false |false
+`aggday`| "sum" |"last" |"min" |"last" |"min" |"sum"
+`steppy`| true |true |false |false |true |true
+`rosy`| false |false| true| true| false| false
+`movingav`| false |false |true |true |false |false
+`aura`|false|false|true| true |false |false
+
+There are four broad, theoretical categories -- called the platonic goal types -- that goals fall into, defined by `dir` and `yaw`:
+
+<pre>
+PHAT = dir -1 & yaw -1 = "go down, like weightloss or gmailzero"
+MOAR = dir +1 & yaw +1 = "go up, like work out more"
+WEEN = dir +1 & yaw -1 = "go up less, like quit smoking"
+RASH = dir -1 & yaw +1 = "go down less, ie, rationing, eg, 
+<a href="http://beeminder.com/d/contacts" title="The Beeminder CEO with an early Beeminder graph to ration his supply of 'daily' contact lenses to last for 2 years, till 2013">bmndr.com/d/contacts</a>"
+</pre>
+
+The `dir` parameter is mostly just for the above categorization, but is used specifically in the following ways:
+
+1. Where to draw the watermarks (amount pledged and number of safe days)
+2. How to phrase things like "bare min of +123 in 4 days" and the status line (also used in bot email subjects)
+3. Which direction is the optimistic one for the rosy dots algorithm
+
+If you just want the dot color, here's how to infer it from `lane` and `yaw`:
+
+* `lane*yaw >= -1`: on the road or on the good side of it (blue or green)
+* `lane*yaw >   1`: good side of the road (green dot)
+* `lane*yaw ==  1`: right lane (blue dot)
+* `lane*yaw == -1`: wrong lane (orange dot)
+* `lane*yaw <= -2`: emergency day or derailed (red dot)
+
+Finally, the way to tell if a goal has finished successfully is `now >= goaldate && goaldate < losedate`.
+That is, you win if you hit the goal date before hitting `losedate`.
+You don't have to actually reach the goal value -- staying on the yellow brick road till the end suffices.
+
+
+
+
+## Get information about a goal {#getgoal}
+
+> Examples
+
+```json
+
+  GET /api/v1/users/alice/goals/weight.json?datapoints=true
+
+  { "slug": "weight",               
+    "title": "Weight Loss",         
+    "goaldate": 1358524800,         
+    "goalval": 166,                 
+    "rate": null,                   
+    "graph_url": "http://static.beeminder.com/alice+weight.png",
+    "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",    
+    "goal_type": "fatloser",            
+    "losedate": 1358524800,        
+    "panic": 54000,                 
+    "queued": false,                
+    "updated_at": 1337479214,       
+    "datapoints": [{"timestamp": 1325523600,    
+                    "value": 70.45,            
+                    "comment": "blah blah",     
+                    "id": "4f9dd9fd86f22478d3"}, 
+                   {"timestamp": 1325610000,
+                    "value": 70.85,
+                    "comment": "blah blah",
+                    "id": "5f9d79fd86f33468d4"}]}
+
+```
+
+### HTTP Request
+
+`GET /users/`*u*`/goals/`*g*`.json`
+
+Gets goal details for user *u*'s goal *g* -- beeminder.com/*u*/*g*.
+
+### Parameters
+
+* \[`datapoints`\] (boolean): Whether to send the goal's datapoints in the response. Default: `false`.
+
+### Returns
+
+A [Goal](#goal) object, possibly without the datapoints attribute.
+
+
+## Get all goals for a user {#getgoals}
+
+
+> Examples
+
+```json
+  GET /api/v1/users/alice/goals.json?filter=frontburner
+
+  [ 
+    { "slug": "gmailzero",
+      "title": "Inbox Zero",
+      "goal_type": "inboxer",
+      "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
+      "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
+      "panic":54000,
+      "losedate": 1347519599,
+      "goaldate": 0,
+      "goalval": 25.0, 
+      "rate": -0.5,
+      "updated_at": 1345774578,
+      "queued": false },
+    { "slug": "fitbit-me",
+      "title": "Never stop moving",
+      "goal_type": "hustler",
+      "graph_url": "http://static.beeminder.com/alice+fitbit-me.png",
+      "thumb_url": "http://static.beeminder.com/alice+fitbit-thumb.png",
+      "panic": 86400,
+      "losedate": 1346482799,
+      "goaldate": 1349582400,
+      "goalval": null,
+      "rate": 8.0,
+      "updated_at": 1345771188,
+      "queued": false } 
+  ]
+```
+
+### HTTP Request
+
+`GET /users/`*u*`/goals.json`
+
+Get user *u*'s list of goals.
+
+
+### Returns
+
+A list of [Goal](#goal) objects for the user.
+
+
+## Create a goal for a user {#creategoal}
+
+
+> Examples
+
+```json
+  POST /api/v1/users/alice/goals.json?slug=exercise&title=Work+Out+More&goal_type=hustler&goaldate=1400000000&rate=5&goalval=null
+
+  { "slug": "exercise",
+    "title": "Work Out More",
+    "goal_type": "hustler",
+    "graph_url": "http://static.beeminder.com/alice+exercise.png",
+    "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
+    "panic": 54000,
+    "losedate": 1447519599,
+    "goaldate": 1400000000,
+    "goalval": null, 
+    "rate": 5,
+    "updated_at": 1345774578,
+    "queued": false }
+```
+
+### HTTP Request
+
+`POST /users/`*u*`/goals.json`
+
+Create a new goal for user *u*.
+
+### Parameters
+
+* `slug` (string)
+* `title` (string)
+* `goal_type` (string)
+* `goaldate` (number or null)
+* `goalval` (number or null)
+* `rate` (number or null)
+* `initval` (number): Initial value for today's date. Default: 0.
+* \[`panic`\] (number)
+* \[`secret`\] (boolean)
+* \[`datapublic`\] (boolean)
+* \[`dryrun`\] (boolean). Pass this to test the endpoint without actually creating a goal. Defaults to false.
+
+[Exactly](http://youtu.be/QM9Bynjh2Lk?t=4m14s) two out of three of `goaldate`, `goalval`, and `rate` are required.
+
+### Returns
+
+The newly created [Goal](#goal) object.
+
+One of the three fields `goaldate`, `goalval`, and `rate` will return a null value. 
+This indicates that the value is calculated based on the other two fields, as selected by the user.
+
+
+## Update a goal for a user {#putgoal}
+
+> Examples
+
+```json
+  PUT /api/v1/users/alice/goals.json?slug=exercise&title=Work+Out+Even+More&panic=3600
+
+  { "slug": "exercise",
+    "title": "Work Out Even More",
+    "goal_type": "hustler",
+    "graph_url": "http://static.beeminder.com/alice+exercise.png",
+    "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
+    "panic": 3600,
+    "losedate": 1447519599,
+    "goaldate": 1400000000,
+    "goalval": null, 
+    "rate": 5,
+    "updated_at": 1345774578,
+    "queued": false }
+```
+
+### HTTP Request
+
+`PUT /users/`*u*`/goals/`*g*`.json`
+
+Update user *u*'s goal with slug *g*.
+This is similar to the call to create a new goal, but the goal type (`goal_type`) cannot be changed.
+To change any of {`goaldate`, `goalval`, `rate`} use the `dial_road` call below.
+
+### Parameters
+
+* \[`slug`\] (string)
+* \[`title`\] (string)
+* \[`yaxis`\] (string)
+* \[`panic`\] (number)
+* \[`secret`\] (boolean)
+* \[`datapublic`\] (boolean)
+* \[`nomercy`\] (boolean)
+* \[`roadall`\] (array of arrays like `[date::int, value::float, rate::float]` each with exactly one field null)
+  * This must not make the goal easier between now and the akrasia horizon (unless you are an admin).
+  * Use `roadall` returned by [goal GET](#getgoal), not `road` -- the latter is missing the first and last rows (for the sake of backwards compatibility).
+  * The first row must be `[date, value, null]` and gives the start of the road, same as `initday` and `initval` in [goal GET](#getgoal).
+  * The last row can be `[null, value, rate]` but no other row can be.
+  * This is a superset of `dial_road` (which changes just the last row of this roadall).
+  * Validation is not yet implemented for exponential goals (so this will error on them, unless you are an admin).
+
+### Returns
+
+The updated [Goal](#goal) object.
+
+
+## Force a fetch of autodata and graph refresh {#refresh}
+
+> Example Request
+
+```json
+  GET /api/v1/users/alice/goals/weight/refresh_graph.json
+
+  true
+```
+
+### HTTP Request
+
+`GET /users/`*u*`/goals/`*g*`/refresh_graph.json`
+
+Analagous to the refresh button on the goal page. Forces a refetch of autodata for goals with automatic data sources. Refreshes the graph image regardless.
+***Please be extremely conservative with this endpoint!***
+
+### Parameters
+
+None.
+
+### Returns
+
+This is an asynchronous operation, so this endpoint simply returns **true** if the goal was queued and **false** if not.
+It is up to you to watch for an updated graph image.
+
+
+## \[deprecated\] Update a yellow brick road {#dialroad} 
+
+
+```json
+  // Example request 
+
+  POST /api/v1/users/alice/goals/weight/dial_road.json?rate=-0.5&goalval=166&goaldate=null
+
+  // Example result
+
+  { "slug": "weight",                       
+    "title": "Weight Loss",                 
+    "goal_type": "fatloser",                    
+    "graph_url": "http://static.beeminder.com/alice+weight.png",
+    "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
+    "goaldate": null,                 
+    "goalval": 166,                         
+    "rate": -0.5,                           
+    "losedate": 1358524800 }
+```
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/dial_road.json`
+
+<aside class="notice">
+Note: the dial_road endpoint is deprecated in favor of 
+<a href="#putgoal" title="on the goal update endpoint">roadall</a> which, despite its highly confusing state, is the future.
+</aside>
+
+Change the slope of the yellow brick road (starting after the one-week 
+[Akrasia Horizon](http://blog.beeminder.com/dial )) 
+for beeminder.com/*u*/*g*.
+
+### Parameters
+
+* `rate` (number or null)
+* `goaldate` (number or null)
+* `goalval` (number or null)
+
+Exactly two of `goaldate`, `goalval`, and `rate` should be specified -- setting two implies the third.
+
+### Returns
+
+The updated [Goal](#goal) object.
+
+
+## Short circuit a goal's pledge {#shortcircuit}
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/shortcircuit.json`
+
+Increase the goal's pledge level and <strong>charge the user the amount of the current pledge</strong>.
+
+### Parameters
+
+None
+
+### Returns
+
+The updated [Goal](#goal) object.
+
+
+## Step down a goal's pledge {#stepdown}
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/stepdown.json`
+
+Decrease the goal's pledge level <strong>subject to the akrasia horizon</strong>, i.e., not immediately. After a successful request the goal will have a countdown to when it will revert to the lower pledge level.
+
+### Parameters
+
+None
+
+### Returns
+
+The updated [Goal](#goal) object.
+
+
+## Cancel a scheduled step down {#cancelstepdown}
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/cancel_stepdown.json`
+
+Cancel a pending stepdown of a goal's pledge. The pledge will remain at the current amount. 
+
+### Parameters
+
+None
+
+### Returns
+
+The updated [Goal](#goal) object.
+
+
+
+[Back to top](#)
+
+
+
+# Datapoint Resource {#datapoint}
+
+A Datapoint consists of a timestamp and a value, an optional comment, and meta information. A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
+
+### Attributes
+
+* `id` (string): A unique ID, used to identify a datapoint when deleting or editing it.
+* `timestamp` (number): The [unix time](http://en.wikipedia.org/wiki/Unix_time ) (in seconds) of the datapoint.
+* `daystamp` (string): The date of the datapoint (e.g., "20150831"). Sometimes timestamps are surprising due to goal deadlines, so if you're looking at Beeminder data, you're probably interested in the daystamp.
+* `value` (number): The value, e.g., how much you weighed on the day indicated by the timestamp.
+* `comment` (string): An optional comment about the datapoint.
+* `updated_at` (number): The unix time that this datapoint was entered or last updated.
+* `requestid` (string): If a datapoint was created via the API and this parameter was included, it will be echoed back.
+
+
+## Get all the datapoints {#dataall}
+
+> Examples
+
+```json
+  GET /api/v1/users/alice/goals/weight/datapoints.json
+
+  [{"id":"1", "timestamp":1234567890, "daystamp":"20090213", "value":7, "comment":"", "updated_at":123, "requestid":"a"}, 
+   {"id":"2", "timestamp":1234567891, "daystamp":"20090214", "value":8, "comment":"", "updated_at":123, "requestid":"b"}]
+```
+
+### HTTP Request
+
+`GET /users/`*u*`/goals/`*g*`/datapoints.json`
+
+Get the list of datapoints for user *u*'s goal *g* -- beeminder.com/*u*/*g*.
+
+### Parameters
+
+None.
+
+### Returns
+
+The list of [Datapoint](#datapoint) objects.
+
+
+## Create a datapoint {#postdata}
+
+> Examples
+
+```json
+  POST /api/v1/users/alice/goals/weight/datapoints.json?timestamp=1325523600&value=130.1&comment=sweat+a+lot+today
+
+  { "timestamp": 1325523600,
+    "daystamp": "20120102",
+    "value": 130.1,         
+    "comment": "sweat a lot today",   
+    "id": "4f9dd9fd86f22478d3000008",
+    "requestid":"abcd182475925"}
+```
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/datapoints.json`
+
+Add a new datapoint to user *u*'s goal *g* -- beeminder.com/*u*/*g*.
+
+### Parameters
+
+* \[`timestamp`\] (number). Default: now, or the existing timestamp if the datapoint is being updated rather than created.
+* \[`daystamp`\] (string). Optionally you can include daystamp instead of the timestamp. If both are included, timestamp takes precedence.
+* `value` (number)  
+* \[`comment`\] (string)
+* \[`requestid`\] (string):
+Alphanumeric string to uniquely identify this datapoint (within this goal. The same requestid can be used for different goals without being considered a duplicate).
+Clients can use this to verify that Beeminder received a datapoint (important for clients with spotty connectivity).
+Using requestids also means clients can safely resend datapoints without accidentally creating duplicates.
+If `requestid` is included and the datapoint is identical to the existing datapoint with that requestid then the datapoint will be ignored (the API will return "duplicate datapoint").
+If `requestid` is included and the datapoint differs from the existing one with the same requestid then the datapoint will be updated.
+If no datapoint with the requestid exists then of course the datapoint is simply created.
+In other words, this is an upsert endpoint and requestid is an idempotency key.
+NB: Must contain only alphanumeric characters or it will be ignored. 
+
+### Returns
+
+The updated [Datapoint](#datapoint) object.
+
+
+## Create multiple datapoints {#postdatas}
+
+> Examples
+
+```json
+  POST /api/v1/users/alice/goals/weight/datapoints/create_all.json?datapoints=[{"timestamp":1343577600,"value":220.6,"comment":"blah+blah", "requestid":"abcd182475929"}, {"timestamp":1343491200,"value":220.7, "requestid":"abcd182475930"}]
+
+  [ { "id": "5016fa9adad11576ad00000f", 
+      "timestamp": 1343577600, 
+      "daystamp": "20120729",
+      "value": 220.6, 
+      "comment": "blah blah", 
+      "updated_at": 1343577600,
+      "requestid":"abcd182475923"}, 
+    { "id": "5016fa9bdad11576ad000010", 
+      "timestamp": 1343491200, 
+      "daystamp": "20120728",
+      "value": 220.7, 
+      "comment": "", 
+      "updated_at": 1343491200,
+      "requestid":"abcd182475923" } ]
+```
+
+### HTTP Request
+
+`POST /users/`*u*`/goals/`*g*`/datapoints/create_all.json`
+
+Create multiple new datapoints for beeminder.com/*u*/*g*.
+
+### Parameters
+
+* `datapoints` (array of Datapoints):
+Each must include `timestamp`, `value`, and `comment`, with `requestid` optional.
+
+### Returns
+
+The list of created [Datapoints](#datapoint).
+
+
+## Update a datapoint {#putdata}
+
+> Examples
+
+```json
+  PUT /api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json&comment=a+real+comment
+
+  { "id": "5016fa9adad11576ad00000f", 
+    "value": 220.6, 
+    "comment": "a real comment", 
+    "timestamp": 1343577600, 
+    "daystamp": "20120729",
+    "updated_at": 1343577609 }
+```
+
+### HTTP Request
+
+`PUT /users/`*u*`/goals/`*g*`/datapoints/`*id*`.json`
+
+Update the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*).
+
+### Parameters
+
+* \[`timestamp`\] (number)
+* \[`value`\] (number)
+* \[`comment`\] (string)
+
+### Returns
+
+The updated [Datapoint](#datapoint) object.
+
+
+## Delete a datapoint {#deletedata}
+
+> Examples
+
+```json
+  DELETE /api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json
+
+  { "id": "5016fa9adad11576ad00000f", 
+    "value": 220.6, 
+    "comment": "a real comment", 
+    "timestamp": 1343577600, 
+    "daystamp": "20120729",
+    "updated_at": 1343577609 }
+```
+
+### HTTP Request
+
+`DELETE /users/`*u*`/goals/`*g*`/datapoints/`*id*`.json`
+
+Delete the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*).
+
+### Parameters
+
+None. 
+
+### Returns
+
+The deleted [Datapoint](#datapoint) object.
+
+
+
+[Back to top](#)
+
+
+
+# Charge Resource {#charge}
+
+Beeminder provides an endpoint to charge an arbitrary amount to a Beeminder user. The user is inferred from the `access_token` or `auth_token` provided.
+A `Charge` object has the following attributes:
+
+### Attributes
+
+* `amount` (number): The amount to charge the user, in US dollars. 
+* `note` (string): An explanation of why the charge was made, or `null` if none was provided.
+* `username` (string): The Beeminder username of the user being charged.
+
+## Create a charge {#postcharge}
+
+> Example request
+
+```curl
+  curl -X POST 'https://www.beeminder.com/api/v1/charges.json' \
+    -d auth_token=abc123 \
+    -d amount=10 \
+    -d note=I%27m+not+worthy%3B+charge+myself+%2410 \
+```
+
+> Example response
+
+```json
+  { "id": "5016fa9adad11576ad00000f", 
+    "amount": 10, 
+    "note": "I'm not worthy; charge myself $10", 
+    "username": "alice" }
+```
+
+### HTTP request
+
+`POST /charges`
+
+Create a charge of a given amount and optionally add a note.
+
+### Parameters
+
+* `amount` (number): The amount to charge the user, in US dollars.
+* \[`note`\] (string): An explanation of why the charge was made.
+* \[`dryrun`\] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.
+
+### Returns
+
+The Charge object, or a dictionary with the error message(s) if the request was not successful.
+
+
+
+[Back to top](#)
+
+
+
+# Webhooks
+
+> Example of POSTed data 
+
+```json
+  { "goal": 
+    { "id": "5016fa9adad11576ad00000f", 
+    "slug": "example", ... }  
+  }
+```
+
+You can configure Beeminder to remind you about goals that are about to derail via webhook, either on the individual goal settings page or on your 
+[account defaults page](https://www.beeminder.com/settings/account). 
+
+Beeminder will remind you via POST request to the URL you specify with a JSON body with all the attributes specified in the description of the 
+[Goal Resource](#goal). 
+
 
