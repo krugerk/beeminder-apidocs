@@ -7,13 +7,8 @@ To Do
 ------------
 
 * DNS for github pages / beeminder subdomain
-* update errors section
-* add / update static links in nav 
-* edit pass w/ current beeminder docs
-* add a "how to contribute" section (or link to this repo & update README here)
-* favicon
-* smaller / better logo?
-* Doesn't actually say "Beeminder API Documentation" anywhere yet 
+* More prominent link to Beeminder
+* [for bee] Possibly update links to api in beeminder/beeminder to have target=blank
 
 Contributing 
 ------------------------------
