@@ -19,11 +19,6 @@ search: true
 
 # Beeminder API Reference
 
-## THIS IS OUT OF DATE
-### SEE [BEEMINDER.COM/API](https://www.beeminder.com/api) for the current docs
-
-I just pulled this over from an out of date Markdown-ified version of the Beeminder API docs. Now that everything is mostly pulled in here and formatted in some reasonable way, I still need to bring it fully up to date with the current, published docs at [beeminder.com/api](https://www.beeminder.com/api ).
-
 ## Introduction 
 
 In case you're here to automate adding data to Beeminder, there's a good chance we've got you covered with our 
