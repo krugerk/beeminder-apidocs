@@ -2,6 +2,8 @@
 @import 'normalize';
 @import 'variables';
 @import 'icon-font';
+@import url('https://fonts.googleapis.com/css?family=Raleway:500,800');
+
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -82,6 +84,7 @@ html, body {
   // This is the logo at the top of the ToC
   &>img {
     display: block;
+    padding: 10px;
     max-width: 100%;
   }
 

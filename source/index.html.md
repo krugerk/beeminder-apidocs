@@ -5,8 +5,10 @@ language_tabs:
   - curl 
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://www.beeminder.com'>Beeminder</a>
+  - <a href='https://www.beeminder.com/apps/new'>Get an API key</a>
+  - <a href='https://github.com/beeminder/slate'>Contribute to these docs!</a>
+  - <a href='https://github.com/tripit/slate'>Docs powered by Slate</a>
 
 includes:
   - errors
@@ -15,14 +17,14 @@ search: true
 ---
 
 
-# Introduction {#introduction}
+# Beeminder API Reference
 
 ## THIS IS OUT OF DATE
 ### SEE [BEEMINDER.COM/API](https://www.beeminder.com/api) for the current docs
 
 I just pulled this over from an out of date Markdown-ified version of the Beeminder API docs. Now that everything is mostly pulled in here and formatted in some reasonable way, I still need to bring it fully up to date with the current, published docs at [beeminder.com/api](https://www.beeminder.com/api ).
 
-## Now, the real intro
+## Introduction 
 
 In case you're here to automate adding data to Beeminder, there's a good chance we've got you covered with our 
 [Zapier integration](http://beeminder.com/zapier "Zapier is a service like IFTTT that connects hundreds of disparate webservices. In the case of Beeminder you can create triggers in other webservices that automatically cause data to be added to Beeminder graphs.")
@@ -37,7 +39,7 @@ is a good place to ask questions and show off what you're working on.
 It's really important to us that this API be easy for developers to use so please don't be shy about asking us questions.
 Whether you post in
 [the forum](http://forum.beeminder.com "The above link is the Tech subset of the forum; this link is to the main page for the forum")
-or email us at support@beeminder.com we've invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
+or email us at **support@beeminder.com** we've invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
 So lean on us heavily as you're hacking away with our API -- it helps us a lot when you do!
 
 ## Preliminaries
@@ -74,14 +76,14 @@ This authentication pattern is for making API calls just to your own Beeminder a
 
 
 After you 
-[sign in to Beeminder](https://www.beeminder.com/users/sign_in ), 
+[log in to Beeminder](https://www.beeminder.com/users/sign_in ), 
 visit 
 <a href="https://www.beeminder.com/api/v1/auth_token.json">`https://www.beeminder.com/api/v1/auth_token.json`</a> 
 to get your personal auth token.
 Append it to API requests you make as an additional GET or POST parameter. 
 
 
-## Client Oauth {#oauth}
+## Client OAuth {#oauth}
 
 
 This authentication pattern is for clients (applications) accessing the Beeminder API on a user's behalf.
@@ -152,14 +154,20 @@ You can retrieve the username for a given access token at any time by sending a 
 Append the access token as a parameter on any API requests you make on behalf of that user. 
 For example, your first request will probably be to get information about the 
 [User](#user) 
-who just authorized your app and so will look something like this:
+who just authorized your app.
 
 
 You can literally use "me" in place of the username for any endpoint and it will be macro-expanded to the username of the authorized user.
 
 ### 5. Optional: De-authorization callback
 
-If you provide a Post De-Authorization Callback url when you register your client, we will make a POST to your endpoint when a user removes your app. The POST will include the access_token removed in the body of the request.
+If you provide a Post De-Authorization Callback URL when you register your client, we will make a POST to your endpoint when a user removes your app. The POST will include the access_token removed in the body of the request.
+
+### 6. Optional: Autofetch callback
+
+The autofetch callback URL is also optional. 
+We will POST to this URL if provided, including the params username, and slug when the user wants new data from you. 
+E.g., when the user pushes the manual refresh button, or prior to sending alerts to the user, and before derailing the goal at the end of an eep day.
 
 [Back to top](#)
 
@@ -179,10 +187,11 @@ sense) includes information about a user, like their list of goals.
 * `goals` (array): 
 A list of slugs for each of the user's goals, or an array of goal hashes (objects) if `diff_since` or `associations` is sent.
 * `deadbeat` (boolean): 
-True if the user's payment info is out of date, or a an attempted payment has failed.
+True if the user's payment info is out of date, or an attempted payment has failed.
 * `deleted_goals` (array): 
 An array of hashes, each with one key/value pair for the id of the deleted goal. 
-Only returned if `diff_since` is sent.
+Only returned if `diff_since` is sent. 
+
 
 ## Get information about a user {#getuser}
 
@@ -235,12 +244,14 @@ Send `true` if you want to receive all of the user's goal and datapoints as attr
 
 * \[`diff_since`\] (number): Unix timestamp in seconds.
 Default: null, which will return all goals and datapoints  
-Send a Unix timestamp to receive a filtered list of the user's goals and datapoints. Only goals and datapoints that have been created or updated since the timestamp will be returned.
+Send a Unix timestamp to receive a filtered list of the user's goals and datapoints. 
+Only goals and datapoints that have been created or updated since the timestamp will be returned.
 Sending `diff_since` implies that you want the user's associations, so you don't need to send both.
 
 * \[`skinny`\] (boolean): Convenience method to only get a subset of goal attributes and the most recent datapoint for the goal.
 Default: false, which will return all goal attributes and all datapoints created or updated since `diff_since`.  
-`skinny` must be sent along with `diff_since`. If `diff_since` is not present, `skinny` is ignored.
+`skinny` must be sent along with `diff_since`. 
+If `diff_since` is not present, `skinny` is ignored.
 Some goal attributes, as well as fetching all datapoints, can take some additional time to compute on the server side, so you can send `skinny` if you only need the latest datapoint and the following subset of attributes:
 `slug, 
 title,
@@ -277,7 +288,7 @@ safebump
 Instead of a `datapoints` attribute, sending `skinny` will replace that attribute with a `last_datapoint` attribute. Its value is a Datapoint hash. 
 
 * \[`datapoints_count`\] (number): number of datapoints.
-Default: null, which will return all goals and datapoints  
+Default: null, which will return all goals and datapoints.
 Send a number `n` to only recieve the `n` most recently added datapoints, sorted by `updated_at`. 
 Note that the most recently added datapoint could have been a datapoint whose timestamp is well in the past and therefore before other datapoints in that respect. 
 For example, my datapoints might look like:  
@@ -331,20 +342,20 @@ Allows third-party apps to send the user to a specific part of the website witho
 
 # Goal Resource {#goal}
 
-A Goal object includes the everything about a specific goal for a specific user, including the target value and date, the steepness of the yellow brick road, the graph image, and various settings for the goal.
+A Goal object includes everything about a specific goal for a specific user, including the target value and date, the steepness of the yellow brick road, the graph image, and various settings for the goal.
 
 ### Attributes
 
 * `slug` (string): The final part of the URL of the goal, used as an identifier. E.g, if user "alice" has a goal at beeminder.com/alice/weight then the goal's slug is "weight".
 * `updated_at` (number): [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time ) of the last time this goal was updated.
-* `burner` (string): One of `frontburner`, `backburner`. Indicates whether the goal is on the "frontburner" for the user in their gallery or whether the goal has been relegated to the "backburner" (below the fold on the web interface). 
 * `title` (string): The title that the user specified for the goal. E.g., "Weight Loss".
+* `fineprint` (string): The user-provided description of what exactly they are committing to.
 * `yaxis` (string): The label for the y-axis of the graph. E.g., "Cumulative total hours".
 * `goaldate` (number): Unix timestamp (in seconds) of the goal date.
 * `goalval` (number): Goal value -- the number the yellow brick road will eventually reach. E.g., 70 kilograms.
 * `rate` (number): The slope of the (final section of the) yellow brick road.
-* `graph_url` (string): URL for the goal's graph image. E.g., "http&#58;//static.beeminder.com/alice/weight.png".
-* `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http&#58;//static.beeminder.com/alice/weight-thumb.png".
+* `graph_url` (string): URL for the goal's graph image. E.g., "http://static.beeminder.com/alice/weight.png".
+* `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http://static.beeminder.com/alice/weight-thumb.png".
 * `autodata` (string): The name of automatic data source, if this goal has one. Will be null for manual goals.
 * `goal_type` (string): One of the following symbols:
  - `hustler`: Do More
@@ -357,8 +368,8 @@ A Goal object includes the everything about a specific goal for a specific user,
 * `losedate` (number): Unix timestamp of derailment. When you'll be off the road if nothing is reported.
 * `panic` (number): Panic threshold. How long before derailment to panic. Default: 54000 (15 hours).
 * `queued` (boolean): Whether the graph is currently being updated to reflect new data.
-* `secret` (boolean): Whether you have to be signed in as owner of the goal to view it. Default: `false`.
-* `datapublic` (boolean): Whether you have to be signed in as the owner of the goal to view the datapoints. Default: `false`.
+* `secret` (boolean): Whether you have to be logged in as owner of the goal to view it. Default: `false`.
+* `datapublic` (boolean): Whether you have to be logged in as the owner of the goal to view the datapoints. Default: `false`.
 * `datapoints` (array of [Datapoints](#datapoint)): The datapoints for this goal.
 * `numpts` (number): Number of datapoints.
 * `pledge` (number): Amount pledged (USD) on the goal.
@@ -377,7 +388,6 @@ A Goal object includes the everything about a specific goal for a specific user,
 * `exprd` (boolean): Exponential road; interpret rate as fractional, not absolute, change.
 * `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
 * `odom` (boolean): Treat zeros as accidental odometer resets.
-* `edgy` (boolean): Put the initial point on the road edge instead of centerline.
 * `noisy` (boolean): Compute road width based on data, not just road rate.
 * `aggday` (string): How to aggregate points on the same day, eg, min/max/mean.
 * `steppy` (boolean): Join dots with purple steppy-style line.
@@ -404,11 +414,11 @@ WARNING: If different apps change this they'll step on each other's toes.
 * `graphsum` (string): Deprecated. Text summary of the graph, not used in the web UI anymore.
 * `lanewidth` (number): Width of the lanes on either side of the centerline of the yellow brick road, i.e., half the road width.
 * `deadline` (number): Seconds by which your deadline differs from midnight. Negative is before midnight, positive is after midnight. 
-Allowed range is -17&#42;3600 to 6&#42;3600 (7am to 6am).
+Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `leadtime` (number): Days before derailing we start sending you reminders. Zero means we start sending them on the eep day, when you will derail later that day.
 * `alertstart` (number): Seconds after midnight that we start sending you reminders (on the day that you're scheduled to start getting them, see `leadtime` above).
 * `plotall` (boolean): Whether to plot all the datapoints, or only the `aggday`'d one. So if false then only the official datapoint that's counted is plotted.
-* `ephem` (boolean): Deprecated and should be removed. Whether a goal is a temporary test goal, of which there is no longer any such thing.
+* `last_datapoint` ([Datapoint](#datapoint)): The last datapoint entered for this goal.
 
 
 
@@ -433,13 +443,11 @@ The following table lists what those attributes are.
 
 There are four broad, theoretical categories -- called the platonic goal types -- that goals fall into, defined by `dir` and `yaw`:
 
-<pre>
-PHAT = dir -1 & yaw -1 = "go down, like weightloss or gmailzero"
-MOAR = dir +1 & yaw +1 = "go up, like work out more"
-WEEN = dir +1 & yaw -1 = "go up less, like quit smoking"
-RASH = dir -1 & yaw +1 = "go down less, ie, rationing, eg, 
-<a href="http://beeminder.com/d/contacts" title="The Beeminder CEO with an early Beeminder graph to ration his supply of 'daily' contact lenses to last for 2 years, till 2013">bmndr.com/d/contacts</a>"
-</pre>
+
+`PHAT = dir -1 & yaw -1`: "go down, like weightloss or gmailzero"<br>
+`MOAR = dir +1 & yaw +1`: "go up, like work out more"<br>
+`WEEN = dir +1 & yaw -1`: "go up less, like quit smoking"<br>
+`RASH = dir -1 & yaw +1`: "go down less, ie, rationing, <a href="http://beeminder.com/d/contacts" title="The Beeminder CEO with an early Beeminder graph to ration his supply of 'daily' contact lenses to last for 2 years, till 2013">for example</a>"
 
 The `dir` parameter is mostly just for the above categorization, but is used specifically in the following ways:
 
@@ -550,6 +558,9 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
 
 Get user *u*'s list of goals.
 
+### Parameters
+
+None.
 
 ### Returns
 
@@ -596,9 +607,12 @@ Create a new goal for user *u*.
 * \[`panic`\] (number)
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
+* \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
 * \[`dryrun`\] (boolean). Pass this to test the endpoint without actually creating a goal. Defaults to false.
 
 [Exactly](http://youtu.be/QM9Bynjh2Lk?t=4m14s) two out of three of `goaldate`, `goalval`, and `rate` are required.
+
+If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST `{username: u, slug: s}` to your callback when this goal wants new data. 
 
 ### Returns
 
@@ -653,6 +667,8 @@ To change any of {`goaldate`, `goalval`, `rate`} use the `dial_road` call below.
   * The last row can be `[null, value, rate]` but no other row can be.
   * This is a superset of `dial_road` (which changes just the last row of this roadall).
   * Validation is not yet implemented for exponential goals (so this will error on them, unless you are an admin).
+* \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
+  * If you pass in your api client's registered name for `datasource`, and  your client has a registered `autofetch_callback_url`, we will POST `{username: u, slug: s}` to your callback when this goal wants new data.
 
 ### Returns
 
@@ -739,7 +755,7 @@ The updated [Goal](#goal) object.
 
 `POST /users/`*u*`/goals/`*g*`/shortcircuit.json`
 
-Increase the goal's pledge level and <strong>charge the user the amount of the current pledge</strong>.
+Increase the goal's pledge level and **charge the user the amount of the current pledge**.
 
 ### Parameters
 
@@ -756,7 +772,8 @@ The updated [Goal](#goal) object.
 
 `POST /users/`*u*`/goals/`*g*`/stepdown.json`
 
-Decrease the goal's pledge level <strong>subject to the akrasia horizon</strong>, i.e., not immediately. After a successful request the goal will have a countdown to when it will revert to the lower pledge level.
+Decrease the goal's pledge level **subject to the akrasia horizon**, i.e., not immediately. 
+After a successful request the goal will have a countdown to when it will revert to the lower pledge level.
 
 ### Parameters
 
@@ -773,7 +790,8 @@ The updated [Goal](#goal) object.
 
 `POST /users/`*u*`/goals/`*g*`/cancel_stepdown.json`
 
-Cancel a pending stepdown of a goal's pledge. The pledge will remain at the current amount. 
+Cancel a pending stepdown of a goal's pledge. 
+The pledge will remain at the current amount. 
 
 ### Parameters
 
@@ -791,7 +809,8 @@ The updated [Goal](#goal) object.
 
 # Datapoint Resource {#datapoint}
 
-A Datapoint consists of a timestamp and a value, an optional comment, and meta information. A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
+A Datapoint consists of a timestamp and a value, an optional comment, and meta information. 
+A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
 
 ### Attributes
 
@@ -853,12 +872,12 @@ Add a new datapoint to user *u*'s goal *g* -- beeminder.com/*u*/*g*.
 
 ### Parameters
 
-* \[`timestamp`\] (number). Default: now, or the existing timestamp if the datapoint is being updated rather than created.
-* \[`daystamp`\] (string). Optionally you can include daystamp instead of the timestamp. If both are included, timestamp takes precedence.
 * `value` (number)  
+* \[`timestamp`\] (number). Defaults to "now" if none is passed in, or the existing timestamp if the datapoint is being updated rather than created (see `requestid` below).
+* \[`daystamp`\] (string). Optionally you can include daystamp instead of the timestamp. If both are included, timestamp takes precedence.
 * \[`comment`\] (string)
 * \[`requestid`\] (string):
-Alphanumeric string to uniquely identify this datapoint (within this goal. The same requestid can be used for different goals without being considered a duplicate).
+Alphanumeric string to uniquely identify this datapoint (scoped to this goal. The same `requestid` can be used for different goals without being considered a duplicate).
 Clients can use this to verify that Beeminder received a datapoint (important for clients with spotty connectivity).
 Using requestids also means clients can safely resend datapoints without accidentally creating duplicates.
 If `requestid` is included and the datapoint is identical to the existing datapoint with that requestid then the datapoint will be ignored (the API will return "duplicate datapoint").
@@ -986,7 +1005,7 @@ A `Charge` object has the following attributes:
 ### Attributes
 
 * `amount` (number): The amount to charge the user, in US dollars. 
-* `note` (string): An explanation of why the charge was made, or `null` if none was provided.
+* `note` (string): An explanation of why the charge was made.
 * `username` (string): The Beeminder username of the user being charged.
 
 ## Create a charge {#postcharge}
@@ -1017,13 +1036,13 @@ Create a charge of a given amount and optionally add a note.
 
 ### Parameters
 
-* `amount` (number): The amount to charge the user, in US dollars.
-* \[`note`\] (string): An explanation of why the charge was made.
+* `amount` (number)
+* `note` (string)
 * \[`dryrun`\] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.
 
 ### Returns
 
-The Charge object, or a dictionary with the error message(s) if the request was not successful.
+The Charge object, or an object with the error message(s) if the request was not successful.
 
 
 
@@ -1042,8 +1061,7 @@ The Charge object, or a dictionary with the error message(s) if the request was 
   }
 ```
 
-You can configure Beeminder to remind you about goals that are about to derail via webhook, either on the individual goal settings page or on your 
-[account defaults page](https://www.beeminder.com/settings/account). 
+You can configure Beeminder to remind you about goals that are about to derail via webhook, either on the individual goal settings page or on your reminder settings page.
 
 Beeminder will remind you via POST request to the URL you specify with a JSON body with all the attributes specified in the description of the 
 [Goal Resource](#goal). 

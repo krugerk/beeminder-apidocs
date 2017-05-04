@@ -28,7 +28,7 @@ $examples-bg: #393939 !default;
 $code-bg: #292929 !default;
 $code-annotation-bg: #1c1c1c !default;
 $nav-subitem-bg: #262626 !default;
-$nav-active-bg: #2467af !default;
+$nav-active-bg: #FFCB06;
 $lang-select-border: #000 !default;
 $lang-select-bg: #222 !default;
 $lang-select-active-bg: $examples-bg !default; // feel free to change this to blue or something
@@ -44,7 +44,7 @@ $search-notice-bg: #c97a7e !default;
 ////////////////////
 $main-text: #333 !default; // main content text color
 $nav-text: #fff !default;
-$nav-active-text: #fff !default;
+$nav-active-text: #333;
 $lang-select-text: #fff !default; // color of unselected language tab text
 $lang-select-active-text: #fff !default; // color of selected language tab text
 $lang-select-pressed-text: #fff !default; // color of language tab text when mouse is pressed
@@ -70,8 +70,7 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 %default-font {
   // Original font declaration from Slate 
   //font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
-  // Stripe's font declarations from Stripe's docs
-  font-family: "Whitney SSm A", "Whitney SSm B", Helvetica, Arial, sans-serif;
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
 
