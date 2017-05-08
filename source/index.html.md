@@ -7,7 +7,7 @@ language_tabs:
 toc_footers:
   - <a href='https://www.beeminder.com'>Beeminder</a>
   - <a href='https://www.beeminder.com/apps/new'>Get an API key</a>
-  - <a href='https://github.com/beeminder/slate'>Contribute to these docs!</a>
+  - <a href='https://github.com/beeminder/apidocs'>Contribute to these docs!</a>
   - <a href='https://github.com/lord/slate'>Docs powered by Slate</a>
 
 includes:
