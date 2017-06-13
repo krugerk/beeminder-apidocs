@@ -29,8 +29,8 @@ You're going to need:
 ### Getting Set Up
 
 1. Fork this repository on Github.
-2. Clone *your forked repository* (not our original one) to your hard drive with `git clone https://github.com/YOURUSERNAME/slate.git`
-3. `cd slate`
+2. Clone *your forked repository* (not our original one) to your hard drive with `git clone https://github.com/YOURUSERNAME/apidocs.git`
+3. `cd apidocs`
 4. Initialize and start Slate. You can either do this locally, or with Vagrant:
 
 ```shell
@@ -46,7 +46,18 @@ You can now see the docs at http://localhost:4567. Whoa! That was fast!
 
 ### Submitting 
 
-Once you've made your changes, you can submit a pull request to beeminder/slate!
+Once you've made your changes, you can submit a pull request to beeminder/apidocs!
+
+### Deploying changes to the docs
+
+(For beeminder/apidocs owners)
+
+* Commit changes and push to beeminder/apidocs (or accept / merge pull request) 
+* Run ./deploy.sh 
+* TODO: currently this breaks the subdomain setup every time. So check if api.beeminder.com is no longer available (possibly redirects to github.io/apidocs or whatever), and if so, curse me for not having fixed it yet, while quickly going into the 
+[https://github.com/beeminder/apidocs/settings](repo settings) and re-adding "api.beeminder.com" under `Custom domain`
+
+
 
 Need Help? Found a bug?
 --------------------
