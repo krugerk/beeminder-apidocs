@@ -1,7 +1,4 @@
-Beeminder API Documentation
----------------------------
-
-<p align="center"><em>The Beeminder api docs are created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
+# Beeminder API Documentation
 
 To Do
 ------------
@@ -66,5 +63,10 @@ Need Help? Found a bug?
 --------------------
 
 [Submit an issue](https://github.com/beeminder/slate/issues), or email support@beeminder.com if you need any help.
+
+
+<br>
+<br>
+<p align="center"><em>The Beeminder api docs are created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
 
 
