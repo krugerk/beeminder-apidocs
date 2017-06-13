@@ -52,10 +52,13 @@ Once you've made your changes, you can submit a pull request to beeminder/apidoc
 
 (For beeminder/apidocs owners)
 
-* Commit changes and push to beeminder/apidocs (or accept / merge pull request) 
-* Run ./deploy.sh 
-* Double check if api.beeminder.com is still available. 
-  - (I maybe fixed this now, but if the subdomain is broken, and you're getting redirected to the github pages url or whatever, then go quickly into https://github.com/beeminder/apidocs/settings and re-adding "api.beeminder.com" under 'Custom domain').
+1. Commit changes and push to the master branch at beeminder/apidocs (or accept / merge pull request) 
+2. Run ./deploy.sh 
+
+* Do not touch the gh-pages branch
+* Double check if api.beeminder.com is still available.[1]
+
+[1] There was a problem where the custom domain setting was getting unset every time we deployed. It looks like I've successfully fixed it now, but if you check after deploy and the subdomain is broken (e.g. you get redirect to the github pages url) then go quickly into https://github.com/beeminder/apidocs/settings and re-add "api.beeminder.com" under 'Custom domain').
 
 
 
