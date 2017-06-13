@@ -54,8 +54,8 @@ Once you've made your changes, you can submit a pull request to beeminder/apidoc
 
 * Commit changes and push to beeminder/apidocs (or accept / merge pull request) 
 * Run ./deploy.sh 
-* TODO: currently this breaks the subdomain setup every time. So check if api.beeminder.com is no longer available (possibly redirects to github.io/apidocs or whatever), and if so, curse me for not having fixed it yet, while quickly going into the 
-[https://github.com/beeminder/apidocs/settings](repo settings) and re-adding "api.beeminder.com" under `Custom domain`
+* Double check if api.beeminder.com is still available. 
+  - (I maybe fixed this now, but if the subdomain is broken, and you're getting redirected to the github pages url or whatever, then go quickly into https://github.com/beeminder/apidocs/settings and re-adding "api.beeminder.com" under 'Custom domain').
 
 
 
