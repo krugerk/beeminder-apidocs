@@ -64,7 +64,7 @@ Note: A common mistake is to pass the personal auth token but call the parameter
 > For example, if your username is "alice" and your token is "abc123" you can query information about your "weight" goal like so:
 
 ```json
-  GET https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
+  GET /api/v1/users/alice/goals/weight.json?auth_token=abc123
 ```
 
 This authentication pattern is for making API calls just to your own Beeminder account.
