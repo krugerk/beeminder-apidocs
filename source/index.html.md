@@ -264,7 +264,6 @@ leadtime,
 alertstart,
 id,
 queued,
-panic,
 updated_at,
 burner,
 yaw,
@@ -361,7 +360,6 @@ A Goal object includes everything about a specific goal for a specific user, inc
  - `drinker`: Do Less
  - `custom`: Full access to the underlying goal parameters
 * `losedate` (number): Unix timestamp of derailment. When you'll be off the road if nothing is reported.
-* `panic` (number): Panic threshold. How long before derailment to panic. Default: 54000 (15 hours).
 * `queued` (boolean): Whether the graph is currently being updated to reflect new data.
 * `secret` (boolean): Whether you have to be logged in as owner of the goal to view it. Default: `false`.
 * `datapublic` (boolean): Whether you have to be logged in as the owner of the goal to view the datapoints. Default: `false`.
@@ -482,7 +480,6 @@ You don't have to actually reach the goal value -- staying on the yellow brick r
     "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",    
     "goal_type": "fatloser",            
     "losedate": 1358524800,        
-    "panic": 54000,                 
     "queued": false,                
     "updated_at": 1337479214,       
     "datapoints": [{"timestamp": 1325523600,    
@@ -525,7 +522,6 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
       "goal_type": "inboxer",
       "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
       "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
-      "panic":54000,
       "losedate": 1347519599,
       "goaldate": 0,
       "goalval": 25.0,
@@ -537,7 +533,6 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
       "goal_type": "hustler",
       "graph_url": "http://static.beeminder.com/alice+fitbit-me.png",
       "thumb_url": "http://static.beeminder.com/alice+fitbit-thumb.png",
-      "panic": 86400,
       "losedate": 1346482799,
       "goaldate": 1349582400,
       "goalval": null,
@@ -575,7 +570,6 @@ A list of [Goal](#goal) objects for the user.
     "goal_type": "hustler",
     "graph_url": "http://static.beeminder.com/alice+exercise.png",
     "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
-    "panic": 54000,
     "losedate": 1447519599,
     "goaldate": 1400000000,
     "goalval": null,
@@ -599,7 +593,6 @@ Create a new goal for user *u*.
 * `goalval` (number or null)
 * `rate` (number or null)
 * `initval` (number): Initial value for today's date. Default: 0.
-* \[`panic`\] (number)
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
 * \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
@@ -622,14 +615,14 @@ This indicates that the value is calculated based on the other two fields, as se
 > Examples
 
 ```json
-  PUT /api/v1/users/alice/goals/exercise.json?slug=exercise&title=Work+Out+Even+More&panic=3600
+  PUT /api/v1/users/alice/goals/exercise.json?title=Work+Out+Even+More&secret=true
 
   { "slug": "exercise",
     "title": "Work Out Even More",
     "goal_type": "hustler",
     "graph_url": "http://static.beeminder.com/alice+exercise.png",
     "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
-    "panic": 3600,
+    "secret": true,
     "losedate": 1447519599,
     "goaldate": 1400000000,
     "goalval": null,
@@ -651,7 +644,6 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`slug`\] (string)
 * \[`title`\] (string)
 * \[`yaxis`\] (string)
-* \[`panic`\] (number)
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
 * \[`nomercy`\] (boolean)
