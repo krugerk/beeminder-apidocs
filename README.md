@@ -3,7 +3,6 @@
 To Do
 ------------
 
-* DNS for github pages / beeminder subdomain
 * More prominent link to Beeminder
 * [for bee] Possibly update links to api in beeminder/beeminder to have target=blank
 
