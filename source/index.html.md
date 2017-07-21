@@ -644,7 +644,7 @@ This indicates that the value is calculated based on the other two fields, as se
 
 Update user *u*'s goal with slug *g*.
 This is similar to the call to create a new goal, but the goal type (`goal_type`) cannot be changed.
-To change any of {`goaldate`, `goalval`, `rate`} use the `dial_road` call below.
+To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 
 ### Parameters
 
@@ -662,6 +662,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use the `dial_road` call below.
   * The last row can be `[null, value, rate]` but no other row can be.
   * This is a superset of `dial_road` (which changes just the last row of this roadall).
   * Validation is not yet implemented for exponential goals (so this will error on them, unless you are an admin).
+  * If you change rate units in the same call, the road will be updated first, and rate units second, so make adjustments to the road in terms of the original rate units, or make two separate calls, first updating rate units, then sending  your adjusted road.
 * \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
   * If you pass in your api client's registered name for `datasource`, and  your client has a registered `autofetch_callback_url`, we will POST `{username: u, slug: s}` to your callback when this goal wants new data.
 
