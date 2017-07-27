@@ -392,8 +392,8 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `lost` (boolean): Whether the goal is currently off track.
 * `nomercy` (boolean): Whether to recommit without the usual week of safety buffer, should you derail.
 * `contract` (dictionary): Dictionary with two attributes. `amount` is the amount at risk on the contract, and `stepdown_at` is a Unix timestamp of when the contract is scheduled to revert to the next lowest pledge amount. `null` indicates that it is not scheduled to revert.
-* `road` (array): Array of tuples that can be used to construct the Yellow Brick Road. This field is also known as the road matrix. Each tuple specifies 2 out of 3 of [`time`, `goal`, `rate`]. To construct the road, start with a known starting point (time, value) and then each row of the road matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
-* `roadall` (array): Like `road` but with an additional initial row consisting of [`initday`, `initval`, null] and an additional final row consisting of [`goaldate`, `goalval`, `rate`].
+* `road` (array): Array of tuples that can be used to construct the Yellow Brick Road. This field is also known as the road matrix. Each tuple specifies 2 out of 3 of \[`time`, `goal`, `rate`\]. To construct the road, start with a known starting point (time, value) and then each row of the road matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
+* `roadall` (array): Like `road` but with an additional initial row consisting of \[`initday`, `initval`, null\] and an additional final row consisting of \[`goaldate`, `goalval`, `rate`\].
 * `fullroad` (array): Like `roadall` but with the nulls filled in.
 * `rah` (number): Road value (y-value of the centerline of the yellow brick road) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the centerline of the yellow brick road to today's datapoint (`curval`).
@@ -652,6 +652,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
   * Use `roadall` returned by [goal GET](#getgoal), not `road` -- the latter is missing the first and last rows (for the sake of backwards compatibility).
   * The first row must be `[date, value, null]` and gives the start of the road, same as `initday` and `initval` in [goal GET](#getgoal).
   * The last row can be `[null, value, rate]` but no other row can be.
+  * You can also send a road with dates specified as either a daystamp or date string, e.g. "20170727" or "2017-07-27".
   * This is a superset of `dial_road` (which changes just the last row of this roadall).
   * Validation is not yet implemented for exponential goals (so this will error on them, unless you are an admin).
   * If you change rate units in the same call, the road will be updated first, and rate units second, so make adjustments to the road in terms of the original rate units, or make two separate calls, first updating rate units, then sending  your adjusted road.
