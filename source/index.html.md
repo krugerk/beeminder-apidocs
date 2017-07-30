@@ -817,7 +817,7 @@ A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
 > Examples
 
 ```json
-  GET /api/v1/users/alice/goals/weight/datapoints.json
+  GET /api/v1/users/alice/goals/weight/datapoints.json?auth_token=yourtoken
 
   [{"id":"1", "timestamp":1234567890, "daystamp":"20090213", "value":7, "comment":"", "updated_at":123, "requestid":"a"},
    {"id":"2", "timestamp":1234567891, "daystamp":"20090214", "value":8, "comment":"", "updated_at":123, "requestid":"b"}]
