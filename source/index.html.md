@@ -843,7 +843,7 @@ The list of [Datapoint](#datapoint) objects.
 > Examples
 
 ```json
-  POST /api/v1/users/alice/goals/weight/datapoints.json?timestamp=1325523600&value=130.1&comment=sweat+a+lot+today
+  POST /api/v1/users/alice/goals/weight/datapoints.json?auth_token=yourtoken&timestamp=1325523600&value=130.1&comment=sweat+a+lot+today
 
   { "timestamp": 1325523600,
     "daystamp": "20120102",
