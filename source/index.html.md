@@ -419,8 +419,8 @@ The goal types are shorthand for a collection of settings of more fundamental go
 Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
 The following table lists what those attributes are.
 
-`hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
---------- | ------- | ---------- | -------- | --------- | ---------
+parameter | `hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
+--------- | --------- | ------- | ---------- | -------- | --------- | ---------
 `yaw` | 1 | 1 | -1 | 1 | -1 | -1
 `dir` | 1 | 1 | -1 | 1 | -1 | 1
 `exprd` | false | false| false| false| false| false
@@ -428,7 +428,7 @@ The following table lists what those attributes are.
 `odom` | false |true |false |false |false| false
 `edgy` | false |false |false |false |false |true
 `noisy`| false |false |true |true |false |false
-`aggday`| "sum" |"last" |"min" |"last" |"min" |"sum"
+`aggday`| "sum" |"last" |"min" |"max" |"min" |"sum"
 `steppy`| true |true |false |false |true |true
 `rosy`| false |false| true| true| false| false
 `movingav`| false |false |true |true |false |false
