@@ -21,7 +21,13 @@ search: false
 
 ## Introduction 
 
-In case you're here to automate adding data to Beeminder, there's a good chance we've got you covered with our 
+> See 
+> <a href="https://github.com/beeminder">github.com/beeminder</a> 
+> for API libraries in various languages.
+> Examples here are currently just curl so far. 
+
+In case you're here to automate adding data to Beeminder, there's a good chance 
+we've got you covered with our 
 [Zapier integration](http://beeminder.com/zapier "Zapier is a service like IFTTT that connects hundreds of disparate webservices. In the case of Beeminder you can create triggers in other webservices that automatically cause data to be added to Beeminder graphs.")
 or our
 [IFTTT integration](http://ifthisMINDthat.com "IFTTT = If This Then That").
@@ -31,11 +37,15 @@ The
 [tech category of our forum](http://forum.beeminder.com/c/tech "Yay Discourse.org!")
 is a good place to ask questions and show off what you're working on.
 
-It's really important to us that this API be easy for developers to use so please don't be shy about asking us questions.
+It's really important to us that this API be easy for developers to use so 
+please don't be shy about asking us questions.
 Whether you post in
 [the forum](http://forum.beeminder.com "The above link is the Tech subset of the forum; this link is to the main page for the forum")
-or email us at **support@beeminder.com** we've invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
-So lean on us heavily as you're hacking away with our API -- it helps us a lot when you do!
+or email us at **support@beeminder.com** we've invariably found that questions 
+people avoided asking for fear they were dumb turned out to point to things we 
+needed to improve in the API or the documentation.
+So lean on us heavily as you're hacking away with our API -- it helps us a lot 
+when you do!
 
 ## Preliminaries
 
@@ -52,19 +62,23 @@ You may also consume the Beeminder API via
 
 All API endpoints require authentication. 
 There are two ways to authenticate.
-Both ultimately give you a token which you must then include with every API request.
+Both ultimately give you a token which you must then include with every API 
+request.
 
 <aside class="notice">
-Note: A common mistake is to pass the personal auth token but call the parameter access_token, or vice-versa. The parameter name for your personal auth token should be `auth_token`.
+Note: A common mistake is to pass the personal auth token but call the parameter
+access_token, or vice-versa. 
+The parameter name for your personal auth token should be `auth_token`.
 </aside>
 
 ## Personal authentication token
 
 
-> For example, if your username is "alice" and your token is "abc123" you can query information about your "weight" goal like so:
+> For example, if your username is "alice" and your token is "abc123" you can 
+> query information about your "weight" goal like so:
 
 ```json
-  GET https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
+GET https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
 ```
 
 This authentication pattern is for making API calls just to your own Beeminder account. 
