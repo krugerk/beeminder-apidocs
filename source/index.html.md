@@ -3,6 +3,7 @@ title: Beeminder API Reference
 
 language_tabs:
   - curl
+  - ruby
 
 toc_footers:
   - <a href='https://www.beeminder.com'>Beeminder</a>
@@ -25,6 +26,7 @@ search: false
 > <a href="https://github.com/beeminder">github.com/beeminder</a> 
 > for API libraries in various languages.
 > Examples here are currently just curl so far. 
+
 
 In case you're here to automate adding data to Beeminder, there's a good chance 
 we've got you covered with our 
@@ -73,13 +75,17 @@ The parameter name for your personal auth token should be `auth_token`.
 
 ## Personal authentication token
 
+> Ruby code examples are coming soon, but in the meantime 
+> <a href="https://github.com/beeminder/beeminder-gem" title="Ruby gem for Beeminder API access">check out the gem on Github</a>.
+
 
 > For example, if your username is "alice" and your token is "abc123" you can 
 > query information about your "weight" goal like so:
 
-```json
-  GET /api/v1/users/alice/goals/weight.json?auth_token=abc123
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
 ```
+
 
 This authentication pattern is for making API calls just to your own Beeminder account.
 
@@ -156,8 +162,8 @@ You can retrieve the username for a given access token at any time by sending a 
 
 ### 4. Include access token as a parameter
 
-```json
-  GET https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
+```curl
+  curl https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
 ```
 
 Append the access token as a parameter on any API requests you make on behalf of that user.
@@ -206,18 +212,22 @@ Only returned if `diff_since` is sent.
 
 > Examples
 
-```json
-  GET /api/v1/users/alice.json?goals_filter=frontburner
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123
+```
 
+```json
   { "username": "alice",
     "timezone": "America/Los_Angeles",
     "updated_at": 1343449880,                       
     "goals": ["gmailzero", "weight"] }
 ```
 
-```json
-  GET /api/v1/users/alice.json?diff_since=1352561989
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice.json?diff_since=1352561989&auth_token=abc123
+```
 
+```json
   { "username": "alice",
     "timezone": "America/Los_Angeles",
     "updated_at": 1343449880,                       
@@ -232,8 +242,7 @@ Only returned if `diff_since` is sent.
                     "id": "5f9d79fd86f33468d4"}],
                "title": "Weight Loss", ...},
                { another goal }, ... ],
-    "deleted_goals": [{ "id": "519279fd86f33468ne"}, ... ]
-}
+    "deleted_goals": [{ "id": "519279fd86f33468ne"}, ... ] }
 ```
 
 ### HTTP Request
@@ -327,8 +336,8 @@ Checking the timestamp is an order of magnitude faster than retrieving all the d
 
 > Examples
 
-```json
-  GET /api/v1/users/alice.json?redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123&redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges
 ```
 
 ### HTTP Request
@@ -481,10 +490,12 @@ You don't have to actually reach the goal value -- staying on the yellow brick r
 
 > Examples
 
+
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123&datapoints=true
+```
+
 ```json
-
-  GET /api/v1/users/alice/goals/weight.json?datapoints=true
-
   { "slug": "weight",               
     "title": "Weight Loss",         
     "goaldate": 1358524800,         
@@ -527,11 +538,12 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
 
 > Examples
 
-```json
-  GET /api/v1/users/alice/goals.json?filter=frontburner
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token=abc123&filter=frontburner
+```
 
-  [
-    { "slug": "gmailzero",
+```json
+  [ { "slug": "gmailzero",
       "title": "Inbox Zero",
       "goal_type": "inboxer",
       "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
@@ -552,8 +564,7 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
       "goalval": null,
       "rate": 8.0,
       "updated_at": 1345771188,
-      "queued": false }
-  ]
+      "queued": false } ]
 ```
 
 ### HTTP Request
@@ -576,9 +587,18 @@ A list of [Goal](#goal) objects for the user.
 
 > Examples
 
-```json
-  POST /api/v1/users/alice/goals.json?slug=exercise&title=Work+Out+More&goal_type=hustler&goaldate=1400000000&rate=5&goalval=null
+```curl
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals.json \
+    -d auth_token=abc123 \
+    -d slug=exercise \
+    -d title=Work+Out+More \
+    -d goal_type=hustler \
+    -d goaldate=1400000000 \
+    -d rate=5 \
+    -d goalval=null
+```
 
+```json
   { "slug": "exercise",
     "title": "Work Out More",
     "goal_type": "hustler",
@@ -628,9 +648,14 @@ This indicates that the value is calculated based on the other two fields, as se
 
 > Examples
 
-```json
-  PUT /api/v1/users/alice/goals/exercise.json?title=Work+Out+Even+More&secret=true
+```curl
+  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json \
+    -d auth_token=abc124 \
+    -d title=Work+Out+Even+More \
+    -d secret=true
+```
 
+```json
   { "slug": "exercise",
     "title": "Work Out Even More",
     "goal_type": "hustler",
@@ -682,9 +707,11 @@ The updated [Goal](#goal) object.
 
 > Example Request
 
-```json
-  GET /api/v1/users/alice/goals/weight/refresh_graph.json
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token=abc123
+```
 
+```json
   true
 ```
 
@@ -708,11 +735,17 @@ It is up to you to watch for an updated graph image.
 ## \[deprecated\] Update a yellow brick road {#dialroad}
 
 
-```json
+```curl
   // Example request
 
-  POST /api/v1/users/alice/goals/weight/dial_road.json?rate=-0.5&goalval=166&goaldate=null
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/dial_road.json \
+    -d auth_token=abc124 \
+    -d rate=-0.5 \
+    -d goalval=166 \
+    -d goaldate=null
+```
 
+```json
   // Example result
 
   { "slug": "weight",                       
@@ -830,9 +863,11 @@ A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
 
 > Examples
 
-```json
-  GET /api/v1/users/alice/goals/weight/datapoints.json?auth_token=yourtoken
+```curl
+  curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token=abc123
+```
 
+```json
   [{"id":"1", "timestamp":1234567890, "daystamp":"20090213", "value":7, "comment":"", "updated_at":123, "requestid":"a"},
    {"id":"2", "timestamp":1234567891, "daystamp":"20090214", "value":8, "comment":"", "updated_at":123, "requestid":"b"}]
 ```
@@ -856,15 +891,21 @@ The list of [Datapoint](#datapoint) objects.
 
 > Examples
 
-```json
-  POST /api/v1/users/alice/goals/weight/datapoints.json?auth_token=yourtoken&timestamp=1325523600&value=130.1&comment=sweat+a+lot+today
+```curl
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json
+    -d auth_token=abc123 \
+    -d timestamp=1325523600 \
+    -d value=130.1 \
+    -d comment=sweat+a+lot+today
+```
 
+```json
   { "timestamp": 1325523600,
     "daystamp": "20120102",
     "value": 130.1,         
     "comment": "sweat a lot today",   
     "id": "4f9dd9fd86f22478d3000008",
-    "requestid":"abcd182475925"}
+    "requestid":"abcd182475925" }
 ```
 
 ### HTTP Request
@@ -898,9 +939,13 @@ The updated [Datapoint](#datapoint) object.
 
 > Examples
 
-```json
-  POST /api/v1/users/alice/goals/weight/datapoints/create_all.json?datapoints=[{"timestamp":1343577600,"value":220.6,"comment":"blah+blah", "requestid":"abcd182475929"}, {"timestamp":1343491200,"value":220.7, "requestid":"abcd182475930"}]
+```curl
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json
+    -d auth_token=abc123 \
+    -d datapoints=[{"timestamp":1343577600,"value":220.6,"comment":"blah+blah", "requestid":"abcd182475929"}, {"timestamp":1343491200,"value":220.7, "requestid":"abcd182475930"}]
+```
 
+```json
   [ { "id": "5016fa9adad11576ad00000f",
       "timestamp": 1343577600,
       "daystamp": "20120729",
@@ -937,9 +982,13 @@ The list of created [Datapoints](#datapoint).
 
 > Examples
 
-```json
-  PUT /api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json&comment=a+real+comment
+```curl
+  curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json \
+    -d auth_token=abc123 \
+    -d comment=a+real+comment
+```
 
+```json
   { "id": "5016fa9adad11576ad00000f",
     "value": 220.6,
     "comment": "a real comment",
@@ -969,9 +1018,11 @@ The updated [Datapoint](#datapoint) object.
 
 > Examples
 
-```json
-  DELETE /api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json
+```curl
+  curl -X DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token=abc123
+```
 
+```json
   { "id": "5016fa9adad11576ad00000f",
     "value": 220.6,
     "comment": "a real comment",
@@ -1014,6 +1065,7 @@ A `Charge` object has the following attributes:
 ## Create a charge {#postcharge}
 
 > Example request
+
 
 ```curl
   curl -X POST 'https://www.beeminder.com/api/v1/charges.json' \
