@@ -2,7 +2,7 @@
 title: Beeminder API Reference
 
 language_tabs:
-  - curl
+  - shell 
   - ruby
 
 toc_footers:
@@ -60,7 +60,7 @@ You may also consume the Beeminder API via
 
 [Back to top](#)
 
-# Authentication {#auth}
+<h1 id="auth">Authentication</h1>
 
 All API endpoints require authentication.
 There are two ways to authenticate.
@@ -82,7 +82,7 @@ The parameter name for your personal auth token should be `auth_token`.
 > For example, if your username is "alice" and your token is "abc123" you can 
 > query information about your "weight" goal like so:
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123
 ```
 
@@ -162,7 +162,7 @@ You can retrieve the username for a given access token at any time by sending a 
 
 ### 4. Include access token as a parameter
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
 ```
 
@@ -186,7 +186,7 @@ E.g., when the user pushes the manual refresh button, or prior to sending alerts
 
 [Back to top](#)
 
-# User Resource {#user}
+<h1 id="user">User Resource</h1>
 
 A User object ("object" in the
 [JSON](http://json.org "JavaScript Objection Notation aka how data is passed around on the internet")
@@ -208,11 +208,11 @@ An array of hashes, each with one key/value pair for the id of the deleted goal.
 Only returned if `diff_since` is sent.
 
 
-## Get information about a user {#getuser}
+<h2 id="getuser">Get information about a user</h2>
 
 > Examples
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123
 ```
 
@@ -223,7 +223,7 @@ Only returned if `diff_since` is sent.
     "goals": ["gmailzero", "weight"] }
 ```
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice.json?diff_since=1352561989&auth_token=abc123
 ```
 
@@ -332,11 +332,11 @@ If you store the returned value and, on your next call to this endpoint, the val
 Checking the timestamp is an order of magnitude faster than retrieving all the data, so it's definitely wise to use this approach.
 
 
-## Authenticate and redirect the user {#redirectuser}
+<h2 id="redirectuser">Authenticate and redirect the user</h2>
 
 > Examples
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123&redirect_to_url=https%3A%2F%2Fwww.beeminder.com%2Fpledges
 ```
 
@@ -357,7 +357,7 @@ Allows third-party apps to send the user to a specific part of the website witho
 
 
 
-# Goal Resource {#goal}
+<h1 id="goal">Goal Resource</h1>
 
 A Goal object includes everything about a specific goal for a specific user, including the target value and date, the steepness of the yellow brick road, the graph image, and various settings for the goal.
 
@@ -486,12 +486,12 @@ You don't have to actually reach the goal value -- staying on the yellow brick r
 
 
 
-## Get information about a goal {#getgoal}
+<h2 id="getgoal">Get information about a goal</h2>
 
 > Examples
 
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight.json?auth_token=abc123&datapoints=true
 ```
 
@@ -533,12 +533,12 @@ Gets goal details for user *u*'s goal *g* -- beeminder.com/*u*/*g*.
 A [Goal](#goal) object, possibly without the datapoints attribute.
 
 
-## Get all goals for a user {#getgoals}
+<h2 id="getgoals">Get all goals for a user</h2>
 
 
 > Examples
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token=abc123&filter=frontburner
 ```
 
@@ -582,12 +582,12 @@ None.
 A list of [Goal](#goal) objects for the user.
 
 
-## Create a goal for a user {#creategoal}
+<h2 id="creategoal">Create a goal for a user</h2>
 
 
 > Examples
 
-```curl
+```shell
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals.json \
     -d auth_token=abc123 \
     -d slug=exercise \
@@ -644,11 +644,11 @@ One of the three fields `goaldate`, `goalval`, and `rate` will return a null val
 This indicates that the value is calculated based on the other two fields, as selected by the user.
 
 
-## Update a goal for a user {#putgoal}
+<h2 id="putgoal">Update a goal for a user</h2>
 
 > Examples
 
-```curl
+```shell
   curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/exercise.json \
     -d auth_token=abc124 \
     -d title=Work+Out+Even+More \
@@ -703,11 +703,11 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 The updated [Goal](#goal) object.
 
 
-## Force a fetch of autodata and graph refresh {#refresh}
+<h2 id="refresh">Force a fetch of autodata and graph refresh</h2>
 
 > Example Request
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight/refresh_graph.json?auth_token=abc123
 ```
 
@@ -732,10 +732,10 @@ This is an asynchronous operation, so this endpoint simply returns **true** if t
 It is up to you to watch for an updated graph image.
 
 
-## \[deprecated\] Update a yellow brick road {#dialroad}
+<h2 id="dialroad">\[deprecated\] Update a yellow brick road</h2>
 
 
-```curl
+```shell
   // Example request
 
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/dial_road.json \
@@ -785,7 +785,7 @@ Exactly two of `goaldate`, `goalval`, and `rate` should be specified -- setting 
 The updated [Goal](#goal) object.
 
 
-## Short circuit a goal's pledge {#shortcircuit}
+<h2 id="shortcircuit">Short circuit a goal's pledge</h2>
 
 ### HTTP Request
 
@@ -802,7 +802,7 @@ None
 The updated [Goal](#goal) object.
 
 
-## Step down a goal's pledge {#stepdown}
+<h2 id="stepdown">Step down a goal's pledge</h2>
 
 ### HTTP Request
 
@@ -820,7 +820,7 @@ None
 The updated [Goal](#goal) object.
 
 
-## Cancel a scheduled step down {#cancelstepdown}
+<h2 id="cancelstepdown">Cancel a scheduled step down</h2>
 
 ### HTTP Request
 
@@ -843,7 +843,7 @@ The updated [Goal](#goal) object.
 
 
 
-# Datapoint Resource {#datapoint}
+<h1 id="datapoint">Datapoint Resource</h1>
 
 A Datapoint consists of a timestamp and a value, an optional comment, and meta information.
 A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
@@ -859,11 +859,11 @@ A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
 * `requestid` (string): If a datapoint was created via the API and this parameter was included, it will be echoed back.
 
 
-## Get all the datapoints {#dataall}
+<h2 id="dataall">Get all the datapoints</h2>
 
 > Examples
 
-```curl
+```shell
   curl https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json?auth_token=abc123
 ```
 
@@ -887,11 +887,11 @@ None.
 The list of [Datapoint](#datapoint) objects.
 
 
-## Create a datapoint {#postdata}
+<h2 id="postdata">Create a datapoint</h2>
 
 > Examples
 
-```curl
+```shell
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json
     -d auth_token=abc123 \
     -d timestamp=1325523600 \
@@ -935,11 +935,11 @@ NB: Must contain only alphanumeric characters or it will be ignored.
 The updated [Datapoint](#datapoint) object.
 
 
-## Create multiple datapoints {#postdatas}
+<h2 id="postdatas">Create multiple datapoints</h2>
 
 > Examples
 
-```curl
+```shell
   curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json
     -d auth_token=abc123 \
     -d datapoints=[{"timestamp":1343577600,"value":220.6,"comment":"blah+blah", "requestid":"abcd182475929"}, {"timestamp":1343491200,"value":220.7, "requestid":"abcd182475930"}]
@@ -978,11 +978,11 @@ Each must include `timestamp`, `value`, and `comment`, with `requestid` optional
 The list of created [Datapoints](#datapoint).
 
 
-## Update a datapoint {#putdata}
+<h2 id="putdata">Update a datapoint</h2>
 
 > Examples
 
-```curl
+```shell
   curl -X PUT https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json \
     -d auth_token=abc123 \
     -d comment=a+real+comment
@@ -1014,11 +1014,11 @@ Update the datapoint with ID *id* for user *u*'s goal *g* (beeminder.com/*u*/*g*
 The updated [Datapoint](#datapoint) object.
 
 
-## Delete a datapoint {#deletedata}
+<h2 id="deletedata">Delete a datapoint</h2>
 
 > Examples
 
-```curl
+```shell
   curl -X DELETE https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/5016fa9adad11576ad00000f.json?auth_token=abc123
 ```
 
@@ -1051,10 +1051,11 @@ The deleted [Datapoint](#datapoint) object.
 
 
 
-# Charge Resource {#charge}
+<h1 id="charge">Charge Resource</h1>
 
 Beeminder provides an endpoint to charge an arbitrary amount to a Beeminder user. The user is inferred from the `access_token` or `auth_token` provided.
 A `Charge` object has the following attributes:
+
 
 ### Attributes
 
@@ -1062,12 +1063,12 @@ A `Charge` object has the following attributes:
 * `note` (string): An explanation of why the charge was made.
 * `username` (string): The Beeminder username of the user being charged.
 
-## Create a charge {#postcharge}
+<h2 id="postcharge">Create a charge</h2>
 
 > Example request
 
 
-```curl
+```shell
   curl -X POST 'https://www.beeminder.com/api/v1/charges.json' \
     -d auth_token=abc123 \
     -d amount=10 \
@@ -1105,7 +1106,7 @@ The Charge object, or an object with the error message(s) if the request was not
 
 
 
-# Webhooks
+<h1 id="webhooks">Webhooks</h1>
 
 > Example of POSTed data
 

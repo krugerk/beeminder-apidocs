@@ -1,5 +1,8 @@
+# Unique header generation
+require './lib/unique_head.rb'
+
 # Markdown
-set :markdown_engine, :maruku
+set :markdown_engine, :redcarpet
 set :markdown,
     fenced_code_blocks: true,
     smartypants: true,
@@ -7,16 +10,14 @@ set :markdown,
     prettify: true,
     tables: true,
     with_toc_data: true,
-    no_intra_emphasis: true
+    no_intra_emphasis: true,
+    renderer: UniqueHeadCounter
 
 # Assets
 set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 set :fonts_dir, 'fonts'
-
-# Reload the browser automatically whenever files change
-activate :livereload
 
 # Activate the syntax highlighter
 activate :syntax
@@ -50,3 +51,7 @@ end
 # Deploy Configuration
 # If you want Middleman to listen on a different port, you can set that below
 set :port, 4567
+
+helpers do
+  require './lib/toc_data.rb'
+end
