@@ -28,6 +28,7 @@ search: false
 > Examples here are currently just curl so far. 
 
 
+
 In case you're here to automate adding data to Beeminder, there's a good chance 
 we've got you covered with our 
 [Zapier integration](http://beeminder.com/zapier "Zapier is a service like IFTTT that connects hundreds of disparate webservices. In the case of Beeminder you can create triggers in other webservices that automatically cause data to be added to Beeminder graphs.")
@@ -74,10 +75,6 @@ The parameter name for your personal auth token should be `auth_token`.
 </aside>
 
 ## Personal authentication token
-
-> Ruby code examples are coming soon, but in the meantime 
-> <a href="https://github.com/beeminder/beeminder-gem" title="Ruby gem for Beeminder API access">check out the gem on Github</a>.
-
 
 > For example, if your username is "alice" and your token is "abc123" you can 
 > query information about your "weight" goal like so:
@@ -214,13 +211,18 @@ Only returned if `diff_since` is sent.
 
 ```shell
   curl https://www.beeminder.com/api/v1/users/alice.json?auth_token=abc123
-```
 
-```json
   { "username": "alice",
     "timezone": "America/Los_Angeles",
     "updated_at": 1343449880,                       
     "goals": ["gmailzero", "weight"] }
+```
+
+```ruby
+  require 'beeminder'
+
+  bee = Beeminder::User.new "yourtoken"
+  bee.info
 ```
 
 ```shell
