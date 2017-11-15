@@ -406,7 +406,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `exprd` (boolean): Exponential road; interpret rate as fractional, not absolute, change.
 * `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
 * `odom` (boolean): Treat zeros as accidental odometer resets.
-* `noisy` (boolean): Compute road width based on data, not just road rate.
+* `noisy` (boolean): Deprecated. Compute road width based on data, not just road rate.
 * `aggday` (string): How to aggregate points on the same day, eg, min/max/mean.
 * `steppy` (boolean): Join dots with purple steppy-style line.
 * `rosy` (boolean): Show the rose-colored dots and connecting line.
@@ -452,7 +452,7 @@ parameter | `hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
 `kyoom`| true| false| false| false| false| true
 `odom` | false |true |false |false |false| false
 `edgy` | false |false |false |false |false |true
-`noisy`| false |false |true |true |false |false
+`noisy`| false |false |false |false |false |false
 `aggday`| "sum" |"last" |"min" |"max" |"min" |"sum"
 `steppy`| true |true |false |false |true |true
 `rosy`| false |false| true| true| false| false
