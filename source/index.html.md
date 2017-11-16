@@ -452,7 +452,6 @@ parameter | `hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
 `kyoom`| true| false| false| false| false| true
 `odom` | false |true |false |false |false| false
 `edgy` | false |false |false |false |false |true
-`noisy`| false |false |false |false |false |false
 `aggday`| "sum" |"last" |"min" |"max" |"min" |"sum"
 `steppy`| true |true |false |false |true |true
 `rosy`| false |false| true| true| false| false
