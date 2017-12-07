@@ -922,14 +922,13 @@ Add a new datapoint to user *u*'s goal *g* -- beeminder.com/*u*/*g*.
 * \[`daystamp`\] (string). Optionally you can include daystamp instead of the timestamp. If both are included, timestamp takes precedence.
 * \[`comment`\] (string)
 * \[`requestid`\] (string):
-Alphanumeric string to uniquely identify this datapoint (scoped to this goal. The same `requestid` can be used for different goals without being considered a duplicate).
+String to uniquely identify this datapoint (scoped to this goal. The same `requestid` can be used for different goals without being considered a duplicate).
 Clients can use this to verify that Beeminder received a datapoint (important for clients with spotty connectivity).
 Using requestids also means clients can safely resend datapoints without accidentally creating duplicates.
 If `requestid` is included and the datapoint is identical to the existing datapoint with that requestid then the datapoint will be ignored (the API will return "duplicate datapoint").
 If `requestid` is included and the datapoint differs from the existing one with the same requestid then the datapoint will be updated.
-If no datapoint with the requestid exists then of course the datapoint is simply created.
+If no datapoint with the requestid exists then the datapoint is simply created.
 In other words, this is an upsert endpoint and requestid is an idempotency key.
-NB: Must contain only alphanumeric characters or it will be ignored.
 
 ### Returns
 
