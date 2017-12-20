@@ -403,10 +403,8 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `mathishard` (array of 3 numbers): The goaldate, goalval, and rate -- all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
 * `headsum` (string): Summary of where you are with respect to the yellow brick road, e.g., "Right on track in the top lane".
 * `limsum` (string): Summary of what you need to do to eke by, e.g., "+2 within 1 day".
-* `exprd` (boolean): Exponential road; interpret rate as fractional, not absolute, change.
 * `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
 * `odom` (boolean): Treat zeros as accidental odometer resets.
-* `noisy` (boolean): Deprecated. Compute road width based on data, not just road rate.
 * `aggday` (string): How to aggregate points on the same day, eg, min/max/mean.
 * `steppy` (boolean): Join dots with purple steppy-style line.
 * `rosy` (boolean): Show the rose-colored dots and connecting line.
@@ -448,7 +446,6 @@ parameter | `hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
 --------- | --------- | ------- | ---------- | -------- | --------- | ---------
 `yaw` | 1 | 1 | -1 | 1 | -1 | -1
 `dir` | 1 | 1 | -1 | 1 | -1 | 1
-`exprd` | false | false| false| false| false| false
 `kyoom`| true| false| false| false| false| true
 `odom` | false |true |false |false |false| false
 `edgy` | false |false |false |false |false |true
