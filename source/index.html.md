@@ -435,6 +435,7 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `alertstart` (number): Seconds after midnight that we start sending you reminders (on the day that you're scheduled to start getting them, see `leadtime` above).
 * `plotall` (boolean): Whether to plot all the datapoints, or only the `aggday`'d one. So if false then only the official datapoint that's counted is plotted.
 * `last_datapoint` ([Datapoint](#datapoint)): The last datapoint entered for this goal.
+* `integery` (boolean): Assume that the units must be integer values.  Used for things like `limsum`.
 
 
 
