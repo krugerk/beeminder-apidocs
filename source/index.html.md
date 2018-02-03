@@ -458,17 +458,18 @@ parameter | `hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
 
 There are four broad, theoretical categories &mdash; called the platonic goal types &mdash; that goals fall into, defined by `dir` and `yaw`:
 
-
-`PHAT = dir -1 & yaw -1`: "go down, like weightloss or gmailzero"<br>
 `MOAR = dir +1 & yaw +1`: "go up, like work out more"<br>
+`PHAT = dir -1 & yaw -1`: "go down, like weightloss or gmailzero"<br>
 `WEEN = dir +1 & yaw -1`: "go up less, like quit smoking"<br>
 `RASH = dir -1 & yaw +1`: "go down less, ie, rationing, <a href="http://beeminder.com/d/contacts" title="The Beeminder CEO with an early Beeminder graph to ration his supply of 'daily' contact lenses to last for 2 years, till 2013">for example</a>"
 
-The `dir` parameter is mostly just for the above categorization, but is used specifically in the following ways:
+The `dir` parameter, for which direction the road is expected to go, is mostly just for the above categorization, but is used specifically in the following ways:
 
 1. Where to draw the watermarks (amount pledged and number of safe days)
 2. How to phrase things like "bare min of +123 in 4 days" and the status line (also used in bot email subjects)
 3. Which direction is the optimistic one for the rosy dots algorithm
+
+*Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (`dir>0`). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!*
 
 If you just want the dot color, here's how to infer it from `lane` and `yaw`:
 
