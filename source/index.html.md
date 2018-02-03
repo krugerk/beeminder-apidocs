@@ -420,7 +420,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `fullroad` (array): Like `roadall` but with the nulls filled in.
 * `rah` (number): Road value (y-value of the centerline of the yellow brick road) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the centerline of the yellow brick road to today's datapoint (`curval`).
-* `delta_text` (string): The text that describes how far the goal is from each lane of the road -- orange, blue, green. If the goal is on the good side of a given lane, the "?" character will appear.
+* `delta_text` (string): The text that describes how far the goal is from each lane of the road &mdash; orange, blue, green. If the goal is on the good side of a given lane, the "?" character will appear.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
 * `id` (string of hex digits): Deprecated. We always use user/slug as the goal identifier in the API.
 * `callback_url` (string): Callback URL, as
@@ -456,7 +456,7 @@ parameter | `hustler` | `biker` | `fatloser` | `gainer` | `inboxer` | `drinker`
 `movingav`| false |false |true |true |false |false
 `aura`|false|false|true| true |false |false
 
-There are four broad, theoretical categories -- called the platonic goal types -- that goals fall into, defined by `dir` and `yaw`:
+There are four broad, theoretical categories &mdash; called the platonic goal types &mdash; that goals fall into, defined by `dir` and `yaw`:
 
 
 `PHAT = dir -1 & yaw -1`: "go down, like weightloss or gmailzero"<br>
@@ -480,7 +480,7 @@ If you just want the dot color, here's how to infer it from `lane` and `yaw`:
 
 Finally, the way to tell if a goal has finished successfully is `now >= goaldate && goaldate < losedate`.
 That is, you win if you hit the goal date before hitting `losedate`.
-You don't have to actually reach the goal value -- staying on the yellow brick road till the end suffices.
+You don't have to actually reach the goal value &mdash; staying on the yellow brick road till the end suffices.
 
 
 
@@ -521,7 +521,7 @@ You don't have to actually reach the goal value -- staying on the yellow brick r
 
 `GET /users/`*u*`/goals/`*g*`.json`
 
-Gets goal details for user *u*'s goal *g* -- beeminder.com/*u*/*g*.
+Gets goal details for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
 
 ### Parameters
 
@@ -687,7 +687,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`nomercy`\] (boolean)
 * \[`roadall`\] (array of arrays like `[date::int, value::float, rate::float]` each with exactly one field null)
   * This must not make the goal easier between now and the akrasia horizon (unless you are an admin).
-  * Use `roadall` returned by [goal GET](#getgoal), not `road` -- the latter is missing the first and last rows (for the sake of backwards compatibility).
+  * Use `roadall` returned by [goal GET](#getgoal), not `road` &mdash; the latter is missing the first and last rows (for the sake of backwards compatibility).
   * The first row must be `[date, value, null]` and gives the start of the road, same as `initday` and `initval` in [goal GET](#getgoal).
   * The last row can be `[null, value, rate]` but no other row can be.
   * You can also send a road with dates specified as either a daystamp or date string, e.g. "20170727" or "2017-07-27".
@@ -776,7 +776,7 @@ for beeminder.com/*u*/*g*.
 * `goaldate` (number or null)
 * `goalval` (number or null)
 
-Exactly two of `goaldate`, `goalval`, and `rate` should be specified -- setting two implies the third.
+Exactly two of `goaldate`, `goalval`, and `rate` should be specified &mdash; setting two implies the third.
 
 ### Returns
 
@@ -874,7 +874,7 @@ A Datapoint belongs to a [Goal](#goal), which has many Datapoints.
 
 `GET /users/`*u*`/goals/`*g*`/datapoints.json`
 
-Get the list of datapoints for user *u*'s goal *g* -- beeminder.com/*u*/*g*.
+Get the list of datapoints for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
 
 ### Parameters
 
@@ -910,7 +910,7 @@ The list of [Datapoint](#datapoint) objects.
 
 `POST /users/`*u*`/goals/`*g*`/datapoints.json`
 
-Add a new datapoint to user *u*'s goal *g* -- beeminder.com/*u*/*g*.
+Add a new datapoint to user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*.
 
 ### Parameters
 
