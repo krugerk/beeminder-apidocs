@@ -8,8 +8,8 @@ Check your HTTP response code, but also we will usually pass back a JSON object 
 Error Code | Meaning
 ---------- | -------
 400 | Bad Request
-401 | Unauthorized -- Wrong / missing key. (Check your parameter name?)
-404 | Not Found -- Couldn't find that resource, or path requested. 
-406 | Not Acceptable -- Check the format of your params? 
-500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+401 | Unauthorized &mdash; Wrong / missing key. (Check your parameter name?)
+404 | Not Found &mdash; Couldn't find that resource, or path requested. 
+406 | Not Acceptable &mdash; Check the format of your params? 
+500 | Internal Server Error &mdash; We had a problem with our server. Try again later.
+503 | Service Unavailable &mdash; We're temporarily offline for maintenance. Please try again later.
