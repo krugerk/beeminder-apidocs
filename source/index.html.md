@@ -371,7 +371,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `fineprint` (string): The user-provided description of what exactly they are committing to.
 * `yaxis` (string): The label for the y-axis of the graph. E.g., "Cumulative total hours".
 * `goaldate` (number): Unix timestamp (in seconds) of the goal date.
-* `goalval` (number): Goal value -- the number the yellow brick road will eventually reach. E.g., 70 kilograms.
+* `goalval` (number): Goal value &mdash; the number the yellow brick road will eventually reach. E.g., 70 kilograms.
 * `rate` (number): The slope of the (final section of the) yellow brick road.
 * `graph_url` (string): URL for the goal's graph image. E.g., "http://static.beeminder.com/alice/weight.png".
 * `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http://static.beeminder.com/alice/weight-thumb.png".
@@ -400,7 +400,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `yaw` (number): Good side of the road. I.e., the side of the road (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the road is sloping, usually the same as yaw.
 * `lane` (number): Where you are with respect to the yellow brick road (2 or more = above the road, 1 = top lane, -1 = bottom lane, -2 or less = below the road).
-* `mathishard` (array of 3 numbers): The goaldate, goalval, and rate -- all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
+* `mathishard` (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
 * `headsum` (string): Summary of where you are with respect to the yellow brick road, e.g., "Right on track in the top lane".
 * `limsum` (string): Summary of what you need to do to eke by, e.g., "+2 within 1 day".
 * `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
