@@ -47,7 +47,7 @@ Whether you post in
 or email us at **support@beeminder.com** we've invariably found that questions 
 people avoided asking for fear they were dumb turned out to point to things we 
 needed to improve in the API or the documentation.
-So lean on us heavily as you're hacking away with our API -- it helps us a lot 
+So lean on us heavily as you're hacking away with our API &mdash; it helps us a lot 
 when you do!
 
 ## Preliminaries
@@ -470,7 +470,7 @@ The `dir` parameter, for which direction the road is expected to go, is mostly j
 3. Which direction is the optimistic one for the rosy dots algorithm
 
 <aside class="notice">
-Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (`dir>0`). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
+Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (dir&gt;0). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
 </aside>
 
 If you just want the dot color, here's how to infer it from `lane` and `yaw`:
