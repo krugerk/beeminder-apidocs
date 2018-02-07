@@ -173,12 +173,12 @@ You can literally use "me" in place of the username for any endpoint and it will
 
 ### 5. Optional: De-authorization callback
 
-If you provide a Post De-Authorization Callback URL when you register your client, we will make a POST to your endpoint when a user removes your app. The POST will include the access_token removed in the body of the request.
+If you provide a Post De-Authorization Callback URL when you register your client, we will make a POST to your endpoint when a user removes your app. The POST will include a single parameter, `access_token` in the body of the request. The value of this parameter will be the token that was de-authorized.
 
 ### 6. Optional: Autofetch callback
 
 The autofetch callback URL is also optional.
-We will POST to this URL if provided, including the params username, and slug when the user wants new data from you.
+We will POST to this URL if provided, including the params `username`, and `slug` in the body of the request when the user wants new data from you.
 E.g., when the user pushes the manual refresh button, or prior to sending alerts to the user, and before derailing the goal at the end of an eep day.
 
 [Back to top](#)
@@ -636,7 +636,7 @@ Create a new goal for user *u*.
 
 [Exactly](http://youtu.be/QM9Bynjh2Lk?t=4m14s) two out of three of `goaldate`, `goalval`, and `rate` are required.
 
-If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST `{username: u, slug: s}` to your callback when this goal wants new data.
+If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](http://localhost:4567/#6-optional-autofetch-callback ).
 
 ### Returns
 
@@ -697,7 +697,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
   * This is a superset of `dial_road` (which changes just the last row of this roadall).
   * If you change rate units in the same call, the road will be updated first, and rate units second, so make adjustments to the road in terms of the original rate units, or make two separate calls, first updating rate units, then sending  your adjusted road.
 * \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
-  * If you pass in your api client's registered name for `datasource`, and  your client has a registered `autofetch_callback_url`, we will POST `{username: u, slug: s}` to your callback when this goal wants new data.
+  * If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](http://localhost:4567/#6-optional-autofetch-callback ).
 
 ### Returns
 
