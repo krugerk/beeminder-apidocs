@@ -178,7 +178,7 @@ If you provide a Post De-Authorization Callback URL when you register your clien
 ### 6. Optional: Autofetch callback
 
 The autofetch callback URL is also optional.
-We will POST to this URL if provided, including the params `username`, and `slug` in the body of the request when the user wants new data from you.
+We will POST to this URL if provided, including the parameters `username` and `slug` in the body of the request when the user wants new data from you.
 E.g., when the user pushes the manual refresh button, or prior to sending alerts to the user, and before derailing the goal at the end of an eep day.
 
 [Back to top](#)
@@ -733,7 +733,7 @@ This is an asynchronous operation, so this endpoint simply returns **true** if t
 It is up to you to watch for an updated graph image.
 
 
-<h2 id="dialroad">\[deprecated\] Update a yellow brick road</h2>
+<h2 id="dialroad">[deprecated] Update a yellow brick road</h2>
 
 
 ```shell
