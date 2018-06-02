@@ -141,7 +141,7 @@ this if it contains any special characters like question marks or ampersands.
 
 > For example, if the user "alice" has access token "abc123" then the following string would be appended to the URL when the user is redirected there:
 
-```json
+```
   ?access_token=abc123&username=alice
 ```
 
