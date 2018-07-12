@@ -55,9 +55,7 @@ when you do!
 The base URL for all requests is `https://www.beeminder.com/api/v1/`
 
 You may also consume the Beeminder API via
-[Mashape](http://mashape.com "Mashape is a hub for cloud APIs (is how Wikipedia puts it)"):
-&nbsp; &nbsp;
-<span id="mashape-button" data-api="beeminder" data-name="beeminder" data-icon="1"></span>
+[Mashape](https://market.mashape.com/beeminder/beeminder "Mashape is a hub for cloud APIs (is how Wikipedia puts it)").
 
 [Back to top](#)
 
