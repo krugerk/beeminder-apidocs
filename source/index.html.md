@@ -974,7 +974,7 @@ Each must include `timestamp`, `value`, and `comment`, with `requestid` optional
 
 ### Returns
 
-The list of created [Datapoints](#datapoint).
+The last created [Datapoint](#datapoint).
 
 
 <h2 id="putdata">Update a datapoint</h2>
