@@ -93,7 +93,7 @@ to get your personal auth token.
 Append it to API requests you make as an additional GET or POST parameter.
 
 
-## Client OAuth {#oauth}
+## Client OAuth
 
 
 This authentication pattern is for clients (applications) accessing the Beeminder API on a user's behalf.
@@ -103,14 +103,14 @@ provider protocol to allow access reasonably securely.
 
 There are four steps to build a client:
 
-### 1. Register your app
+<h3 id="registerapp">1. Register your app</h3>
 
 Register your app at
 [beeminder.com/apps/new](https://www.beeminder.com/apps/new ).
 Application name and redirect URL are required.
 The redirect URL is where the user is sent after authorizing your app.
 
-### 2. Send your users to the Beeminder authorization URL
+<h3 id="authurl">2. Send your users to the Beeminder authorization URL</h3>
 
 > Example authorization URL:
 
@@ -135,7 +135,7 @@ this if it contains any special characters like question marks or ampersands.
 * `response_type`: Currently this should just always be set to the value "`token`".
 
 
-### 3. Receive and store user's access token
+<h3 id="storetoken">3. Receive and store user's access token</h3>
 
 > For example, if the user "alice" has access token "abc123" then the following string would be appended to the URL when the user is redirected there:
 
@@ -155,7 +155,7 @@ The access token uniquely identifies the user's authorization for your app.
 The username is provided here for convenenience.
 You can retrieve the username for a given access token at any time by sending a GET request for `/api/v1/me.json` with the token appended as a parameter.
 
-### 4. Include access token as a parameter
+<h3 id="tokenparam">4. Include access token as a parameter</h3>
 
 ```shell
   curl https://www.beeminder.com/api/v1/users/me.json?access_token=abc123
@@ -169,11 +169,11 @@ who just authorized your app.
 
 You can literally use "me" in place of the username for any endpoint and it will be macro-expanded to the username of the authorized user.
 
-### 5. Optional: De-authorization callback
+<h3 id="deauth">5. Optional: De-authorization callback</h3>
 
 If you provide a Post De-Authorization Callback URL when you register your client, we will make a POST to your endpoint when a user removes your app. The POST will include a single parameter, `access_token` in the body of the request. The value of this parameter will be the token that was de-authorized.
 
-### 6. Optional: Autofetch callback
+<h3 id="autofetch">6. Optional: Autofetch callback</h3>
 
 The autofetch callback URL is also optional.
 We will POST to this URL if provided, including the parameters `username` and `slug` in the body of the request when the user wants new data from you.
