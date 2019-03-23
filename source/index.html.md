@@ -420,7 +420,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `delta` (number): Distance from the centerline of the yellow brick road to today's datapoint (`curval`).
 * `delta_text` (string): The text that describes how far the goal is from each lane of the road &mdash; orange, blue, green. If the goal is on the good side of a given lane, the "?" character will appear.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
-* `id` (string of hex digits): Deprecated. We always use user/slug as the goal identifier in the API.
+* `id` (string of hex digits): We prefer using user/slug as the goal identifier, however since slugs are modifiable, this alphanumeric unique id can be useful!
 * `callback_url` (string): Callback URL, as
 [discussed in the forum](http://forum.beeminder.com/t/webhook-callback-documentation/313 "In short: you can add a callback to your own server whenever data is added on Beeminder").
 WARNING: If different apps change this they'll step on each other's toes.
