@@ -420,7 +420,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `delta` (number): Distance from the centerline of the yellow brick road to today's datapoint (`curval`).
 * `delta_text` (string): The text that describes how far the goal is from each lane of the road &mdash; orange, blue, green. If the goal is on the good side of a given lane, the "?" character will appear.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
-* `id` (string of hex digits): We prefer using user/slug as the goal identifier, however since slugs are modifiable, this alphanumeric unique id can be useful!
+* `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
 * `callback_url` (string): Callback URL, as
 [discussed in the forum](http://forum.beeminder.com/t/webhook-callback-documentation/313 "In short: you can add a callback to your own server whenever data is added on Beeminder").
 WARNING: If different apps change this they'll step on each other's toes.
@@ -629,7 +629,7 @@ Create a new goal for user *u*.
 * `initval` (number): Initial value for today's date. Default: 0.
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
-* \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
+* \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none (i.e., "manual").
 * \[`dryrun`\] (boolean). Pass this to test the endpoint without actually creating a goal. Defaults to false.
 
 [Exactly](http://youtu.be/QM9Bynjh2Lk?t=4m14s) two out of three of `goaldate`, `goalval`, and `rate` are required.
@@ -694,8 +694,9 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
   * You can also send a road with dates specified as either a daystamp or date string, e.g. "20170727" or "2017-07-27".
   * This is a superset of `dial_road` (which changes just the last row of this roadall).
   * If you change rate units in the same call, the road will be updated first, and rate units second, so make adjustments to the road in terms of the original rate units, or make two separate calls, first updating rate units, then sending  your adjusted road.
-* \[`datasource`\] (string): one of {"manual", "api", "ifttt", "zapier", or `clientname`\}. Default: "manual".
+* \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none.
   * If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](#6-optional-autofetch-callback ).
+  * To unset the datasource, (i.e. return to manual entry) pass in the empty string `""`.
 
 ### Returns
 
