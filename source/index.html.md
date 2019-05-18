@@ -277,6 +277,7 @@ description,
 goalval,
 rate,
 goaldate,
+svg_url,
 graph_url,
 thumb_url,
 goal_type,
@@ -363,7 +364,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 
 ### Attributes
 
-* `slug` (string): The final part of the URL of the goal, used as an identifier. E.g, if user "alice" has a goal at beeminder.com/alice/weight then the goal's slug is "weight".
+* `slug` (string): The final part of the URL of the goal, used as an identifier. E.g., if user "alice" has a goal at beeminder.com/alice/weight then the goal's slug is "weight".
 * `updated_at` (number): [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time ) of the last time this goal was updated.
 * `title` (string): The title that the user specified for the goal. E.g., "Weight Loss".
 * `fineprint` (string): The user-provided description of what exactly they are committing to.
@@ -371,6 +372,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `goaldate` (number): Unix timestamp (in seconds) of the goal date.
 * `goalval` (number): Goal value &mdash; the number the yellow brick road will eventually reach. E.g., 70 kilograms.
 * `rate` (number): The slope of the (final section of the) yellow brick road.
+* `svg_url` (string): URL for the goal's graph svg. E.g., "http://static.beeminder.com/alice/weight.svg".
 * `graph_url` (string): URL for the goal's graph image. E.g., "http://static.beeminder.com/alice/weight.png".
 * `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http://static.beeminder.com/alice/weight-thumb.png".
 * `autodata` (string): The name of automatic data source, if this goal has one. Will be null for manual goals.
@@ -501,6 +503,7 @@ You don't have to actually reach the goal value &mdash; staying on the yellow br
     "goaldate": 1358524800,         
     "goalval": 166,                 
     "rate": null,                   
+    "svg_url":   "http://static.beeminder.com/alice+weight.svg",
     "graph_url": "http://static.beeminder.com/alice+weight.png",
     "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",    
     "goal_type": "fatloser",            
@@ -546,6 +549,7 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
   [ { "slug": "gmailzero",
       "title": "Inbox Zero",
       "goal_type": "inboxer",
+      "svg_url": "http://static.beeminder.com/alice+gmailzero.svg",
       "graph_url": "http://static.beeminder.com/alice+gmailzero.png",
       "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
       "losedate": 1347519599,
@@ -557,6 +561,7 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
     { "slug": "fitbit-me",
       "title": "Never stop moving",
       "goal_type": "hustler",
+      "svg_url": "http://static.beeminder.com/alice+fitbit-me.svg",
       "graph_url": "http://static.beeminder.com/alice+fitbit-me.png",
       "thumb_url": "http://static.beeminder.com/alice+fitbit-thumb.png",
       "losedate": 1346482799,
@@ -602,6 +607,7 @@ A list of [Goal](#goal) objects for the user.
   { "slug": "exercise",
     "title": "Work Out More",
     "goal_type": "hustler",
+    "svg_url": "http://static.beeminder.com/alice+exercise.svg",
     "graph_url": "http://static.beeminder.com/alice+exercise.png",
     "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
     "losedate": 1447519599,
@@ -659,6 +665,7 @@ This indicates that the value is calculated based on the other two fields, as se
   { "slug": "exercise",
     "title": "Work Out Even More",
     "goal_type": "hustler",
+    "svg_url": "http://static.beeminder.com/alice+exercise.svg",
     "graph_url": "http://static.beeminder.com/alice+exercise.png",
     "thumb_url": "http://static.beeminder.com/alice+exercise-thumb.png",
     "secret": true,
@@ -751,6 +758,7 @@ It is up to you to watch for an updated graph image.
   { "slug": "weight",                       
     "title": "Weight Loss",                 
     "goal_type": "fatloser",                    
+    "svg_url": "http://static.beeminder.com/alice+weight.svg",
     "graph_url": "http://static.beeminder.com/alice+weight.png",
     "thumb_url": "http://static.beeminder.com/alice+weight-thumb.png",
     "goaldate": null,                 
