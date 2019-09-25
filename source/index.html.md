@@ -888,7 +888,10 @@ Get the list of datapoints for user *u*'s goal *g* &mdash; beeminder.com/*u*/*g*
 
 ### Parameters
 
-None.
+* \[`sort`\] (string): Which attribute to sort on. Defaults to `id` if none given. 
+* \[`count`\] (integer): Limit results to count number of datapoints. Defaults to all datapoints if parameter is missing. 
+* \[`page`\] (integer): Used to paginate results. 
+* \[`per`\] (integer): Number of results per page. Default 25. Ignored without page parameter. 
 
 ### Returns
 
