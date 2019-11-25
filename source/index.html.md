@@ -990,7 +990,8 @@ Each must include `timestamp`, `value`, and `comment`, with `requestid` optional
 
 ### Returns
 
-The last created [Datapoint](#datapoint).
+A list of successfully created [Datapoints](#datapoint). 
+Or, in the case of any errors, you will receive an object with two lists, `successes`, and `errors`.
 
 
 <h2 id="putdata">Update a datapoint</h2>
