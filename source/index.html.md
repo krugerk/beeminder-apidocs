@@ -376,7 +376,8 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `yaxis` (string): The label for the y-axis of the graph. E.g., "Cumulative total hours".
 * `goaldate` (number): Unix timestamp (in seconds) of the goal date.
 * `goalval` (number): Goal value &mdash; the number the yellow brick road will eventually reach. E.g., 70 kilograms.
-* `rate` (number): The slope of the (final section of the) yellow brick road (see also `runits` for rate units).
+* `rate` (number): The slope of the (final section of the) yellow brick road. You must also consider `runits` to fully specify the rate.
+* `runits` (string): Rate units. One of `y`, `m`, `w`, `d`, `h` indicating that the rate of the yellow brick road is yearly, monthly, weekly, daily, or hourly.
 * `svg_url` (string): URL for the goal's graph svg. E.g., "http://static.beeminder.com/alice/weight.svg".
 * `graph_url` (string): URL for the goal's graph image. E.g., "http://static.beeminder.com/alice/weight.png".
 * `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http://static.beeminder.com/alice/weight-thumb.png".
@@ -401,7 +402,6 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `curday` (number): Unix timestamp (in seconds) of the end of the yellow brick road, i.e., the most recent (inferred) datapoint.
 * `curval` (number): The value of the most recent datapoint.
 * `lastday` (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.
-* `runits` (string): Rate units. One of `y`, `m`, `w`, `d`, `h` indicating that the rate of the yellow brick road is yearly, monthly, weekly, daily, or hourly.
 * `yaw` (number): Good side of the road. I.e., the side of the road (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the road is sloping, usually the same as yaw.
 * `lane` (number): Where you are with respect to the yellow brick road (2 or more = above the road, 1 = top lane, -1 = bottom lane, -2 or less = below the road).
