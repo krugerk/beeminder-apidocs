@@ -52,7 +52,9 @@ when you do!
 
 ## Preliminaries
 
-The base URL for all requests is `https://www.beeminder.com/api/v1/`
+The base URL for all requests is `https://www.beeminder.com/api/v1/`.
+
+A common mistake is to use the wrong URL, e.g. using an `http` protocol instead of `https`, or leaving out the `www` subdomain. We redirect insecure and non `www` requests to the canonical Beeminder URL, but do not forward parameters for `POST` requests, so some things will break opaquely.
 
 You may also consume the Beeminder API via
 [Mashape](https://market.mashape.com/beeminder/beeminder "Mashape is a hub for cloud APIs (is how Wikipedia puts it)").
@@ -374,7 +376,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `yaxis` (string): The label for the y-axis of the graph. E.g., "Cumulative total hours".
 * `goaldate` (number): Unix timestamp (in seconds) of the goal date.
 * `goalval` (number): Goal value &mdash; the number the yellow brick road will eventually reach. E.g., 70 kilograms.
-* `rate` (number): The slope of the (final section of the) yellow brick road.
+* `rate` (number): The slope of the (final section of the) yellow brick road (see also `runits` for rate units).
 * `svg_url` (string): URL for the goal's graph svg. E.g., "http://static.beeminder.com/alice/weight.svg".
 * `graph_url` (string): URL for the goal's graph image. E.g., "http://static.beeminder.com/alice/weight.png".
 * `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http://static.beeminder.com/alice/weight-thumb.png".
