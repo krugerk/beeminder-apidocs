@@ -179,7 +179,7 @@ If you provide a Post De-Authorization Callback URL when you register your clien
 
 The autofetch callback URL is also optional.
 We will POST to this URL if provided, including the parameters `username` and `slug` in the body of the request when the user wants new data from you.
-E.g., when the user pushes the manual refresh button, or prior to sending alerts to the user, and before derailing the goal at the end of an eep day.
+E.g., when the user pushes the manual refresh button, or prior to sending alerts to the user, and before derailing the goal at the end of a beemergency.
 
 [Back to top](#)
 
@@ -436,7 +436,7 @@ WARNING: If different apps change this they'll step on each other's toes.
 * `lanewidth` (number): Width of the lanes on either side of the centerline of the yellow brick road, i.e., half the road width.
 * `deadline` (number): Seconds by which your deadline differs from midnight. Negative is before midnight, positive is after midnight.
 Allowed range is -17*3600 to 6*3600 (7am to 6am).
-* `leadtime` (number): Days before derailing we start sending you reminders. Zero means we start sending them on the eep day, when you will derail later that day.
+* `leadtime` (number): Days before derailing we start sending you reminders. Zero means we start sending them on the beemergency, when you will derail later that day.
 * `alertstart` (number): Seconds after midnight that we start sending you reminders (on the day that you're scheduled to start getting them, see `leadtime` above).
 * `plotall` (boolean): Whether to plot all the datapoints, or only the `aggday`'d one. So if false then only the official datapoint that's counted is plotted.
 * `last_datapoint` ([Datapoint](#datapoint)): The last datapoint entered for this goal.
