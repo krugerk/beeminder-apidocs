@@ -200,6 +200,8 @@ sense) includes information about a user, like their list of goals.
 A list of slugs for each of the user's goals, or an array of goal hashes (objects) if `diff_since` or `associations` is sent.
 * `deadbeat` (boolean):
 True if the user's payment info is out of date, or an attempted payment has failed.
+* `urgency_load` (number):
+The idea of Urgency Load is to construct a single number that captures how edge-skatey you are across all your goals. A lower number means fewer urgently due goals. A score of 0 means that you have >= 7 days of buffer on all of your active goals.
 * `deleted_goals` (array):
 An array of hashes, each with one key/value pair for the id of the deleted goal.
 Only returned if `diff_since` is sent.
