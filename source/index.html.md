@@ -593,6 +593,7 @@ None.
 ### Returns
 
 A list of [Goal](#goal) objects for the user.
+Goals are sorted in descending order of urgency, i.e. increasing order of time to derailment.
 
 
 <h2 id="creategoal">Create a goal for a user</h2>
