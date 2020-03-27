@@ -23,9 +23,9 @@ search: false
 ## Introduction
 
 > See 
-> <a href="https://github.com/beeminder">github.com/beeminder</a> 
+> <a href="https://github.com/beeminder" title="The Beeminder org on GitHub">github.com/beeminder</a> 
 > for API libraries in various languages.
-> Examples here are currently just curl so far. 
+> Examples here are currently just Curl and Ruby so far. 
 
 
 
@@ -35,29 +35,26 @@ we've got you covered with our
 or our
 [IFTTT integration](http://ifthisMINDthat.com "IFTTT = If This Then That").
 If you're looking for ideas for things to do with the Beeminder API, we have a
-[blog post with lots of examples](http://blog.beeminder.com/api "This was the blog post that originally announced our API in 2012 but we've updated occasionally since then with links to things people are doing with it").
+[blog post with lots of examples](http://blog.beeminder.com/api "This was the blog post that originally announced our API in 2012").
 The
 [tech category of our forum](http://forum.beeminder.com/c/tech "Yay Discourse.org!")
 is a good place to ask questions and show off what you're working on.
 
-It's really important to us that this API be easy for developers to use so 
-please don't be shy about asking us questions.
+It's really important to us that this API be easy for developers to use so please don't be shy about asking us questions.
 Whether you post in
 [the forum](http://forum.beeminder.com "The above link is the Tech subset of the forum; this link is to the main page for the forum")
-or email us at **support@beeminder.com** we've invariably found that questions 
-people avoided asking for fear they were dumb turned out to point to things we 
-needed to improve in the API or the documentation.
-So lean on us heavily as you're hacking away with our API &mdash; it helps us a lot 
-when you do!
+or email us at **support@beeminder.com** we've invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
+So lean on us heavily as you're hacking away with our API &mdash; it helps us a lot when you do!
 
 ## Preliminaries
 
 The base URL for all requests is `https://www.beeminder.com/api/v1/`.
 
-A common mistake is to use the wrong URL, e.g. using an `http` protocol instead of `https`, or leaving out the `www` subdomain. We redirect insecure and non `www` requests to the canonical Beeminder URL, but do not forward parameters for `POST` requests, so some things will break opaquely.
+A common mistake is to use the wrong URL, e.g., using an `http` protocol instead of `https`, or leaving out the `www` subdomain. 
+We redirect insecure and non `www` requests to the canonical Beeminder URL, but do not forward parameters for `POST` requests, so some things will break opaquely if you don't use exactly the above base URL.
 
 You may also consume the Beeminder API via
-[Mashape](https://market.mashape.com/beeminder/beeminder "Mashape is a hub for cloud APIs (is how Wikipedia puts it)").
+[RapidAPI](https://market.mashape.com/beeminder/beeminder "RapidAPI (formerly Mashape) is a hub for cloud APIs (is how Wikipedia puts it)").
 
 [Back to top](#)
 
@@ -65,8 +62,7 @@ You may also consume the Beeminder API via
 
 All API endpoints require authentication.
 There are two ways to authenticate.
-Both ultimately give you a token which you must then include with every API 
-request.
+Both ultimately give you a token which you must then include with every API request.
 
 <aside class="notice">
 Note: A common mistake is to pass the personal auth token but call the parameter
@@ -317,11 +313,14 @@ Default: null, which will return all goals and datapoints.
 Send a number `n` to only recieve the `n` most recently added datapoints, sorted by `updated_at`.
 Note that the most recently added datapoint could have been a datapoint whose timestamp is well in the past and therefore before other datapoints in that respect.
 For example, my datapoints might look like:  
+
 12 1  
 14 1  
 15 1  
 16 1  
+
 If I go back and realize that I forgot to enter data on the 13th, the datapoint for the 13th will be sorted ahead of the one on the 16th:  
+
 12 1  
 14 1  
 15 1  
@@ -593,8 +592,9 @@ None.
 ### Returns
 
 A list of [Goal](#goal) objects for the user.
-Goals are sorted in descending order of urgency, i.e. increasing order of time to derailment.
-
+Goals are sorted in descending order of urgency, i.e., increasing order of time to derailment.
+(There's actually a very tiny caveat to this involving the long-deprecated "sort threshold" parameter.
+If you don't know what that is then you can ignore this parenthetical!)
 
 <h2 id="creategoal">Create a goal for a user</h2>
 
@@ -707,12 +707,12 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
   * Use `roadall` returned by [goal GET](#getgoal), not `road` &mdash; the latter is missing the first and last rows (for the sake of backwards compatibility).
   * The first row must be `[date, value, null]` and gives the start of the road, same as `initday` and `initval` in [goal GET](#getgoal).
   * The last row can be `[null, value, rate]` but no other row can be.
-  * You can also send a road with dates specified as either a daystamp or date string, e.g. "20170727" or "2017-07-27".
+  * You can also send a road with dates specified as either a daystamp or date string, e.g., "20170727" or "2017-07-27".
   * This is a superset of `dial_road` (which changes just the last row of this roadall).
   * If you change rate units in the same call, the road will be updated first, and rate units second, so make adjustments to the road in terms of the original rate units, or make two separate calls, first updating rate units, then sending  your adjusted road.
 * \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none.
   * If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](#6-optional-autofetch-callback ).
-  * To unset the datasource, (i.e. return to manual entry) pass in the empty string `""`.
+  * To unset the datasource, (i.e., return to manual entry) pass in the empty string `""`.
 
 ### Returns
 
