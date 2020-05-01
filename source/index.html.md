@@ -292,7 +292,6 @@ updated_at,
 burner,
 yaw,
 lane,
-lanewidth,
 delta,
 runits,
 limsum,
@@ -434,7 +433,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 WARNING: If different apps change this they'll step on each other's toes.
 * `description` (string): Deprecated. User-supplied description of goal (listed in sidebar of graph page as "Goal Statement").
 * `graphsum` (string): Deprecated. Text summary of the graph, not used in the web UI anymore.
-* `lanewidth` (number): Width of the lanes on either side of the centerline of the yellow brick road, i.e., half the road width.
+* `lanewidth` (number): Deprecated and in fact should no longer be settable at all. Width of the lanes on either side of the centerline of the yellow brick road, i.e., half the road width.
 * `deadline` (number): Seconds by which your deadline differs from midnight. Negative is before midnight, positive is after midnight.
 Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `leadtime` (number): Days before derailing we start sending you reminders. Zero means we start sending them on the beemergency day, when you will derail later that day.
