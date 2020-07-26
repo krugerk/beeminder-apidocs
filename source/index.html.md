@@ -423,7 +423,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `road` (array): Array of tuples that can be used to construct the Yellow Brick Road. This field is also known as the road matrix. Each tuple specifies 2 out of 3 of \[`time`, `goal`, `rate`\]. To construct the road, start with a known starting point (time, value) and then each row of the road matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
 * `roadall` (array): Like `road` but with an additional initial row consisting of \[`initday`, `initval`, null\] and an additional final row consisting of \[`goaldate`, `goalval`, `rate`\].
 * `fullroad` (array): Like `roadall` but with the nulls filled in.
-* `rah` (number): Road value (y-value of the centerline of the yellow brick road) at the akrasia horizon (today plus one week).
+* `rah` (number): Road value (y-value of the bright line of the yellow brick road) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the yellow brick road to today's datapoint (`curval`).
 * `delta_text` (string): Deprecated.
 * `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
