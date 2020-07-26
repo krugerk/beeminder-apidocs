@@ -404,7 +404,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `lastday` (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.
 * `yaw` (number): Good side of the road. I.e., the side of the road (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the road is sloping, usually the same as yaw.
-* `lane` (number): Deprecated. See `losedate`.
+* `lane` (number): Deprecated. See `losedate` and `safebuf`.
 * `mathishard` (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
 * `headsum` (string): Deprecated. Summary text blurb saying how much safety buffer you have.
 * `limsum` (string): Summary of what you need to do to eke by, e.g., "+2 within 1 day".
@@ -426,6 +426,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `rah` (number): Road value (y-value of the centerline of the yellow brick road) at the akrasia horizon (today plus one week).
 * `delta` (number): Distance from the yellow brick road to today's datapoint (`curval`).
 * `delta_text` (string): Deprecated.
+* `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
 * `callback_url` (string): Callback URL, as
@@ -479,13 +480,14 @@ The `dir` parameter, for which direction the road is expected to go, is mostly j
 Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (dir&gt;0). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
 </aside>
 
-If you just want the dot color, here's how to infer it from `lane` and `yaw`:
+If you just want the dot color, here's how to infer it from `safebuf`:
 
-* `lane*yaw >= -1`: on the road or on the good side of it (blue or green)
-* `lane*yaw >   1`: good side of the road (green dot)
-* `lane*yaw ==  1`: right lane (blue dot)
-* `lane*yaw == -1`: wrong lane (orange dot)
-* `lane*yaw <= -2`: emergency day or derailed (red dot)
+```javascript
+color = (safebuf < 1 ? "red"    :
+         safebuf < 2 ? "orange" :
+         safebuf < 3 ? "blue"   : 
+         safebuf < 7 ? "green"  : "gray")
+```
 
 Finally, the way to tell if a goal has finished successfully is `now >= goaldate && goaldate < losedate`.
 That is, you win if you hit the goal date before hitting `losedate`.
