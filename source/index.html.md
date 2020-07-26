@@ -480,7 +480,7 @@ The `dir` parameter, for which direction the road is expected to go, is mostly j
 Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (dir&gt;0). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
 </aside>
 
-If you just want the dot color, here's how to infer it from `safebuf`:
+If you just want the dot color, here's how to infer it from `safebuf` (see code in sidebar).
 
 ```
 color = (safebuf < 1 ? "red"    :
