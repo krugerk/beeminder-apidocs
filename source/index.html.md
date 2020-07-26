@@ -404,9 +404,9 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `lastday` (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.
 * `yaw` (number): Good side of the road. I.e., the side of the road (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the road is sloping, usually the same as yaw.
-* `lane` (number): Where you are with respect to the yellow brick road (2 or more = above the road, 1 = top lane, -1 = bottom lane, -2 or less = below the road).
+* `lane` (number): Deprecated. See `losedate` and `safebuf`.
 * `mathishard` (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The road dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
-* `headsum` (string): Summary of where you are with respect to the yellow brick road, e.g., "Right on track in the top lane".
+* `headsum` (string): Deprecated. Summary text blurb saying how much safety buffer you have.
 * `limsum` (string): Summary of what you need to do to eke by, e.g., "+2 within 1 day".
 * `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
 * `odom` (boolean): Treat zeros as accidental odometer resets.
@@ -423,9 +423,10 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `road` (array): Array of tuples that can be used to construct the Yellow Brick Road. This field is also known as the road matrix. Each tuple specifies 2 out of 3 of \[`time`, `goal`, `rate`\]. To construct the road, start with a known starting point (time, value) and then each row of the road matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
 * `roadall` (array): Like `road` but with an additional initial row consisting of \[`initday`, `initval`, null\] and an additional final row consisting of \[`goaldate`, `goalval`, `rate`\].
 * `fullroad` (array): Like `roadall` but with the nulls filled in.
-* `rah` (number): Road value (y-value of the centerline of the yellow brick road) at the akrasia horizon (today plus one week).
-* `delta` (number): Distance from the centerline of the yellow brick road to today's datapoint (`curval`).
-* `delta_text` (string): The text that describes how far the goal is from each lane of the road &mdash; orange, blue, green. If the goal is on the good side of a given lane, the "?" character will appear.
+* `rah` (number): Road value (y-value of the bright line of the yellow brick road) at the akrasia horizon (today plus one week).
+* `delta` (number): Distance from the yellow brick road to today's datapoint (`curval`).
+* `delta_text` (string): Deprecated.
+* `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
 * `callback_url` (string): Callback URL, as
@@ -433,7 +434,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 WARNING: If different apps change this they'll step on each other's toes.
 * `description` (string): Deprecated. User-supplied description of goal (listed in sidebar of graph page as "Goal Statement").
 * `graphsum` (string): Deprecated. Text summary of the graph, not used in the web UI anymore.
-* `lanewidth` (number): Deprecated and in fact should no longer be settable at all. Width of the lanes on either side of the centerline of the yellow brick road, i.e., half the road width.
+* `lanewidth` (number): Deprecated. Now always zero.
 * `deadline` (number): Seconds by which your deadline differs from midnight. Negative is before midnight, positive is after midnight.
 Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `leadtime` (number): Days before derailing we start sending you reminders. Zero means we start sending them on the beemergency day, when you will derail later that day.
@@ -479,13 +480,14 @@ The `dir` parameter, for which direction the road is expected to go, is mostly j
 Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots the cumulative total of your metric, such as total cigarettes smoked. So even a quit-smoking goal will slope up (dir&gt;0). Just that it will slope up less and less steeply as you wean yourself. When you actually quit, the slope will be zero. That's why "WEEN" goals are sloping up but good side is down. The opposite case &mdash; sloping down but good side's up &mdash; is called "RASH" and is rarely used. It's for beeminding a number that you want to go down slowly. Maybe cigarettes remaining in a carton that you want to be your last, or bottles of fresh water remaining post-apocalypse &mdash; someday this goal type will be useful!
 </aside>
 
-If you just want the dot color, here's how to infer it from `lane` and `yaw`:
+If you just want the dot color, here's how to infer it from `safebuf`:
 
-* `lane*yaw >= -1`: on the road or on the good side of it (blue or green)
-* `lane*yaw >   1`: good side of the road (green dot)
-* `lane*yaw ==  1`: right lane (blue dot)
-* `lane*yaw == -1`: wrong lane (orange dot)
-* `lane*yaw <= -2`: emergency day or derailed (red dot)
+```javascript
+color = (safebuf < 1 ? "red"    :
+         safebuf < 2 ? "orange" :
+         safebuf < 3 ? "blue"   : 
+         safebuf < 7 ? "green"  : "gray")
+```
 
 Finally, the way to tell if a goal has finished successfully is `now >= goaldate && goaldate < losedate`.
 That is, you win if you hit the goal date before hitting `losedate`.
