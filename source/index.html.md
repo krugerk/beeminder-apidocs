@@ -482,7 +482,7 @@ Clearing up confusion about WEEN and RASH goal types: Beeminder generally plots 
 
 If you just want the dot color, here's how to infer it from `safebuf`:
 
-```javascript
+```
 color = (safebuf < 1 ? "red"    :
          safebuf < 2 ? "orange" :
          safebuf < 3 ? "blue"   : 
