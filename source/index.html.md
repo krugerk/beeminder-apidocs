@@ -150,7 +150,7 @@ After the user authorizes your application they'll be redirected to the `redirec
 You should set up your server to handle this GET request and have it remember each user's access token.
 The access token uniquely identifies the user's authorization for your app.
 
-The username is provided here for convenenience.
+The username is provided here for convenience.
 You can retrieve the username for a given access token at any time by sending a GET request for `/api/v1/me.json` with the token appended as a parameter.
 
 <h3 id="tokenparam">4. Include access token as a parameter</h3>
