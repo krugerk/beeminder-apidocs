@@ -54,7 +54,7 @@ A common mistake is to use the wrong URL, e.g., using an `http` protocol instead
 We redirect insecure and non `www` requests to the canonical Beeminder URL, but do not forward parameters for `POST` requests, so some things will break opaquely if you don't use exactly the above base URL.
 
 You may also consume the Beeminder API via
-[RapidAPI](https://market.mashape.com/beeminder/beeminder "RapidAPI (formerly Mashape) is a hub for cloud APIs (is how Wikipedia puts it)").
+[RapidAPI](https://rapidapi.com/beeminder/api/beeminder "RapidAPI (formerly Mashape) is a hub for cloud APIs (is how Wikipedia puts it)").
 
 [Back to top](#)
 
