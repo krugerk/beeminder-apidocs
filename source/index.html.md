@@ -703,6 +703,8 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`slug`\] (string)
 * \[`title`\] (string)
 * \[`yaxis`\] (string)
+* \[`tmin`\] (string) date format "yyyy-mm-dd"
+* \[`tmax`\] (string) date format "yyyy-mm-dd"
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
 * \[`roadall`\] (array of arrays like `[date::int, value::float, rate::float]` each with exactly one field null)
