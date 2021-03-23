@@ -54,7 +54,7 @@ A common mistake is to use the wrong URL, e.g., using an `http` protocol instead
 We redirect insecure and non `www` requests to the canonical Beeminder URL, but do not forward parameters for `POST` requests, so some things will break opaquely if you don't use exactly the above base URL.
 
 You may also consume the Beeminder API via
-[RapidAPI](https://market.mashape.com/beeminder/beeminder "RapidAPI (formerly Mashape) is a hub for cloud APIs (is how Wikipedia puts it)").
+[RapidAPI](https://rapidapi.com/beeminder/api/beeminder "RapidAPI (formerly Mashape) is a hub for cloud APIs (is how Wikipedia puts it)").
 
 [Back to top](#)
 
@@ -447,6 +447,7 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `todayta` (boolean): Whether there are any datapoints for today
 * `tmin` (string): Lower bound on x-axis; don't show data before this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-min')
 * `tmax` (string): Upper bound on x-axis; don't show data after this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-max')
+* `tags` (array): A list of the goals's tags.
 
 The goal types are shorthand for a collection of settings of more fundamental goal attributes.
 Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
@@ -704,7 +705,6 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`yaxis`\] (string)
 * \[`secret`\] (boolean)
 * \[`datapublic`\] (boolean)
-* \[`nomercy`\] (boolean)
 * \[`roadall`\] (array of arrays like `[date::int, value::float, rate::float]` each with exactly one field null)
   * This must not make the goal easier between now and the akrasia horizon (unless you are an admin).
   * Use `roadall` returned by [goal GET](#getgoal), not `road` &mdash; the latter is missing the first and last rows (for the sake of backwards compatibility).
