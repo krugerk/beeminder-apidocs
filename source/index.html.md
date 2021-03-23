@@ -444,7 +444,9 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `integery` (boolean): Assume that the units must be integer values.  Used for things like `limsum`.
 * `gunits` (string): Goal units, like "hours" or "pushups" or "pages".
 * `hhmmformat` (boolean): Whether to show data in a "timey" way, with colons.  For example, this would make a 1.5 show up as 1:30.
-* `todayta` (boolean): Whether there are any datapoints for today.
+* `todayta` (boolean): Whether there are any datapoints for today
+* `tmin` (string): Lower bound on x-axis; don't show data before this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-min')
+* `tmax` (string): Upper bound on x-axis; don't show data after this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-max')
 * `tags` (array): A list of the goals's tags.
 
 The goal types are shorthand for a collection of settings of more fundamental goal attributes.
