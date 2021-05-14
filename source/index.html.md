@@ -612,6 +612,7 @@ If you don't know what that is then you can ignore this parenthetical!)
     -d title=Work+Out+More \
     -d goal_type=hustler \
     -d goaldate=1400000000 \
+    -d gunits=workouts \
     -d rate=5 \
     -d goalval=null
 ```
@@ -642,6 +643,7 @@ Create a new goal for user *u*.
 * `slug` (string)
 * `title` (string)
 * `goal_type` (string)
+* `gunits` (string)
 * `goaldate` (number or null)
 * `goalval` (number or null)
 * `rate` (number or null)
