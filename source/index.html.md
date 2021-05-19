@@ -46,6 +46,8 @@ Whether you post in
 or email us at **support@beeminder.com** we've invariably found that questions people avoided asking for fear they were dumb turned out to point to things we needed to improve in the API or the documentation.
 So lean on us heavily as you're hacking away with our API &mdash; it helps us a lot when you do!
 
+A note of caution for the reader: We document the User and Goal resources below, explaining various attributes that you will find in the API outputs. If you inspect the API outputs you get, however, you'll probably notice a bunch of info that's not included here. You can use any of that info you like, but it may change at our whim down the road. (That's why we don't document it.) 
+
 ## Preliminaries
 
 The base URL for all requests is `https://www.beeminder.com/api/v1/`.
