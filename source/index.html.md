@@ -704,7 +704,6 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 
 ### Parameters
 
-* \[`slug`\] (string)
 * \[`title`\] (string)
 * \[`yaxis`\] (string)
 * \[`tmin`\] (string) date format "yyyy-mm-dd"
