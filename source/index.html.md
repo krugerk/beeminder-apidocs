@@ -1018,7 +1018,8 @@ Create multiple new datapoints for beeminder.com/*u*/*g*.
 ### Parameters
 
 * `datapoints` (array of Datapoints):
-Each must include `timestamp`, `value`, and `comment`, with `requestid` optional.
+Each Datapoint should be a JSON object, and must include at minimum a `value`.
+Other parameters are the same as for the single-create method above.  
 
 ### Returns
 
