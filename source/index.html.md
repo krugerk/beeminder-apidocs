@@ -468,7 +468,7 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `todayta` (boolean): Whether there are any datapoints for today
 * `tmin` (string): Lower bound on x-axis; don't show data before this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-min')
 * `tmax` (string): Upper bound on x-axis; don't show data after this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-max')
-* `tags` (array): A list of the goals's tags.
+* `tags` (array): A list of the goal's tags.
 
 The goal types are shorthand for a collection of settings of more fundamental goal attributes.
 Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
@@ -673,6 +673,7 @@ Create a new goal for user *u*.
 * \[`datapublic`\] (boolean)
 * \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none (i.e., "manual").
 * \[`dryrun`\] (boolean). Pass this to test the endpoint without actually creating a goal. Defaults to false.
+* \[`tags`\] (array). An optional list of tags to add to the new goal. Each tag must be an alphanumeric strings.
 
 [Exactly](http://youtu.be/QM9Bynjh2Lk?t=4m14s) two out of three of `goaldate`, `goalval`, and `rate` are required.
 
@@ -740,6 +741,7 @@ To change any of {`goaldate`, `goalval`, `rate`} use `roadall`.
 * \[`datasource`\] (string): one of {"api", "ifttt", "zapier", or `clientname`\}. Default: none.
   * If you pass in your API client's registered name for the `datasource`, and your client has a registered `autofetch_callback_url`, we will POST to your callback when this goal wants new data, as outlined in [Client OAuth](#6-optional-autofetch-callback ).
   * To unset the datasource, (i.e., return to manual entry) pass in the empty string `""`.
+* \[`tags`\] (array). A list of tags for the goal. Each tag must be an alphanumeric strings. NOTE: if you pass this parameter, it will replace the existing tags for the goal. If you pass an empty array, or an explicit nil value, it will remove all tags from the goal. 
 
 ### Returns
 
