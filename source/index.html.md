@@ -659,7 +659,7 @@ If you don't know what that is then you can ignore this parenthetical!)
 
 ### HTTP Request
 
-`GET /users/`*u*`/goals.json`
+`GET /users/`*u*`/goals/archived.json`
 
 Get user *u*'s archived goals.
 
