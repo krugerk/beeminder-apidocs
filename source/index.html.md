@@ -1173,6 +1173,7 @@ A `Charge` object has the following attributes:
 ```shell
   curl -X POST 'https://www.beeminder.com/api/v1/charges.json' \
     -d auth_token=abc123 \
+    -d user_id=alice \
     -d amount=10 \
     -d note=I%27m+not+worthy%3B+charge+myself+%2410 \
 ```
@@ -1194,6 +1195,7 @@ Create a charge of a given amount and optionally add a note.
 
 ### Parameters
 
+* `user_id` (string): Username of the user who is getting charged.
 * `amount` (number)
 * `note` (string)
 * \[`dryrun`\] (string): If passed, the Charge is not actually created, but the JSON for it is returned as if it were. Default: false.
