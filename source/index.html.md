@@ -1028,7 +1028,6 @@ If `requestid` is included and the datapoint is identical to the existing datapo
 If `requestid` is included and the datapoint differs from the existing one with the same requestid then the datapoint will be updated.
 If no datapoint with the requestid exists then the datapoint is simply created.
 In other words, this is an upsert endpoint and requestid is an idempotency key.
-NB: If you're sending multiple create datapoint requests in rapid succession (within say < 100-500ms of each other) using this endpoint, and sending the same requestid, it's not guaranteed that the datapoints won't be duplicated, as you might expect.
 
 ### Returns
 
