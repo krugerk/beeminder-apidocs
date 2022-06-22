@@ -575,7 +575,7 @@ A [Goal](#goal) object, possibly without the datapoints attribute.
 > Examples
 
 ```shell
-  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token=abc123&filter=frontburner
+  curl https://www.beeminder.com/api/v1/users/alice/goals.json?auth_token=abc123
 ```
 
 ```json
