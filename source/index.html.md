@@ -992,7 +992,7 @@ The list of [Datapoint](#datapoint) objects.
 > Examples
 
 ```shell
-  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints.json \
     -d auth_token=abc123 \
     -d timestamp=1325523600 \
     -d value=130.1 \
@@ -1039,7 +1039,7 @@ The updated [Datapoint](#datapoint) object.
 > Examples
 
 ```shell
-  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json
+  curl -X POST https://www.beeminder.com/api/v1/users/alice/goals/weight/datapoints/create_all.json \
     -d auth_token=abc123 \
     -d datapoints=[{"timestamp":1343577600,"value":220.6,"comment":"blah+blah", "requestid":"abcd182475929"}, {"timestamp":1343491200,"value":220.7, "requestid":"abcd182475930"}]
 ```
