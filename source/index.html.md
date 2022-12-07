@@ -439,7 +439,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `frozen` (boolean): Whether the goal is currently frozen and therefore must be restarted before continuing to accept data.
 * `won` (boolean): Whether the goal has been successfully completed.
 * `lost` (boolean): Whether the goal is currently off track.
-* `maxflux` (Integer): Max daily fluctuation for weight goals. Used as an absolute buffer amount on recommit. Also shown on the graph as a thick guiding line.
+* `maxflux` (Integer): Max daily fluctuation for weight goals. Used as an absolute buffer amount after a derail. Also shown on the graph as a thick guiding line.
 * `contract` (dictionary): Dictionary with two attributes. `amount` is the amount at risk on the contract, and `stepdown_at` is a Unix timestamp of when the contract is scheduled to revert to the next lowest pledge amount. `null` indicates that it is not scheduled to revert.
 * `road` (array): Array of tuples that can be used to construct the Bright Red Line (formerly "Yellow Brick Road"). This field is also known as the graph matrix. Each tuple specifies 2 out of 3 of \[`time`, `goal`, `rate`\]. To construct `road`, start with a known starting point (time, value) and then each row of the graph matrix specifies 2 out of 3 of {t,v,r} which gives the segment ending at time t. You can walk forward filling in the missing 1-out-of-3 from the (time, value) in the previous row.
 * `roadall` (array): Like `road` but with an additional initial row consisting of \[`initday`, `initval`, null\] and an additional final row consisting of \[`goaldate`, `goalval`, `rate`\].
