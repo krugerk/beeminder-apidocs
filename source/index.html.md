@@ -422,6 +422,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `initval` (number): The y-value of the start of the bright red line.
 * `curday` (number): Unix timestamp (in seconds) of the end of the bright red line, i.e., the most recent (inferred) datapoint.
 * `curval` (number): The value of the most recent datapoint.
+* `currate` (number): The rate of the red line at time `curday`; if there's a rate change on that day, take the limit from the left.
 * `lastday` (number): Unix timestamp (in seconds) of the last (explicitly entered) datapoint.
 * `yaw` (number): Good side of the bright red line. I.e., the side of the line (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the bright red line is sloping, usually the same as yaw.
