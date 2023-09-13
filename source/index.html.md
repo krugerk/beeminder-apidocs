@@ -386,7 +386,7 @@ Allows third-party apps to send the user to a specific part of the website witho
 
 <h1 id="goal">Goal Resource</h1>
 
-A Goal object includes everything about a specific goal for a specific user, including the target value and date, the steepness of the bright red line, the graph image, and various settings for the goal.
+A Goal object includes everything about a specific goal for a specific user, including the target value and date, the steepness of the bright red line, the graph image, and various settings for the goal. 
 
 ### Attributes
 
@@ -427,7 +427,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `yaw` (number): Good side of the bright red line. I.e., the side of the line (+1/-1 = above/below) that makes you say "yay".
 * `dir` (number): Direction the bright red line is sloping, usually the same as yaw.
 * `lane` (number): Deprecated. See `losedate` and `safebuf`.
-* `mathishard` (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The commitment dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.)
+* `mathishard` (array of 3 numbers): The goaldate, goalval, and rate &mdash; all filled in. (The commitment dial specifies 2 out of 3 and you can check this if you want Beeminder to do the math for you on inferring the third one.) Note: this field may be null if the goal is in an error state such that the graph image can't be generated.
 * `headsum` (string): Deprecated. Summary text blurb saying how much safety buffer you have.
 * `limsum` (string): Summary of what you need to do to eke by, e.g., "+2 within 1 day".
 * `kyoom` (boolean): Cumulative; plot values as the sum of all those entered so far, aka auto-summing.
