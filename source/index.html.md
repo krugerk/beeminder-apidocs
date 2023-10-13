@@ -47,7 +47,7 @@ So lean on us heavily as you're hacking away with our API &mdash; it helps us a 
 If you're looking for ideas for things to do with the Beeminder API, we have a
 [blog post with lots of examples](http://blog.beeminder.com/api "This was the blog post that originally announced our API in 2012").
 While we're talking about things that people have done with the Beeminder API, we want to ladle out some extra praise for the
-[Complice](https://complice.co/features#beeminder "Complice explains how Beeminder integration complements Complice") 
+[Intend](https://intend.do/features?utm_source=beeminder&utm_medium=link&utm_campaign=beem-api-docs#beeminder "Describing how Beeminder integration complements Intend") 
 and 
 [TaskRatchet](https://docs.taskratchet.com/integrations.html#beeminder "Describing how Beeminder works with TaskRatchet") integrations.
 Malcolm and Narthur, respectively, have built useful Beeminder integrations without us having to lift a finger. 
