@@ -450,6 +450,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `delta_text` (string): Deprecated.
 * `safebuf` (number): The integer number of safe days. If it's a beemergency this will be zero.
 * `safebump` (number): The absolute y-axis number you need to reach to get one additional day of safety buffer.
+* `autoratchet` (number): The goal's autoratchet setting. If it's not set or they don't have permission to autoratchet, its value will be nil. This represents the maximum number of days of safety buffer the goal is allowed to accrue, or in the case of a Do-Less goal, the max buffer in terms of the goal's units. Read-only. 
 * `id` (string of hex digits): We prefer using user/slug as the goal identifier, however, since we began allowing users to change slugs, this id is useful!
 * `callback_url` (string): Callback URL, as
 [discussed in the forum](http://forum.beeminder.com/t/webhook-callback-documentation/313 "In short: you can add a callback to your own server whenever data is added on Beeminder").
