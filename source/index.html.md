@@ -395,15 +395,15 @@ A Goal object includes everything about a specific goal for a specific user, inc
 * `title` (string): The title that the user specified for the goal. E.g., "Weight Loss".
 * `fineprint` (string): The user-provided description of what exactly they are committing to.
 * `yaxis` (string): The label for the y-axis of the graph. E.g., "Cumulative total hours".
-* `goaldate` (number): Unix timestamp (in seconds) of the goal date. NOTE: this may be null; see below.
-* `goalval` (number): Goal value &mdash; the number the bright red line will eventually reach. E.g., 70 kilograms. NOTE: this may be null; see below.
-* `rate` (number): The slope of the (final section of the) bright red line. You must also consider `runits` to fully specify the rate. NOTE: this may be null; see below. 
+* `goaldate` (number): Unix timestamp (in seconds) of the goal date. NOTE: this may be null; [see below](#one-of-three).
+* `goalval` (number): Goal value &mdash; the number the bright red line will eventually reach. E.g., 70 kilograms. NOTE: this may be null; [see below](#one-of-three).
+* `rate` (number): The slope of the (final section of the) bright red line. You must also consider `runits` to fully specify the rate. NOTE: this may be null; [see below](#one-of-three). 
 * `runits` (string): Rate units. One of `y`, `m`, `w`, `d`, `h` indicating that the rate of the bright red line is yearly, monthly, weekly, daily, or hourly.
 * `svg_url` (string): URL for the goal's graph svg. E.g., "http://static.beeminder.com/alice/weight.svg".
 * `graph_url` (string): URL for the goal's graph image. E.g., "http://static.beeminder.com/alice/weight.png".
 * `thumb_url` (string): URL for the goal's graph thumbnail image. E.g., "http://static.beeminder.com/alice/weight-thumb.png".
 * `autodata` (string): The name of automatic data source, if this goal has one. Will be null for manual goals.
-* `goal_type` (string): One of the following symbols:
+* `goal_type` (string): One of the following symbols (detailed info [below](#goal-types)):
  - `hustler`: Do More
  - `biker`: Odometer
  - `fatloser`: Weight loss
@@ -473,10 +473,10 @@ Allowed range is -17*3600 to 6*3600 (7am to 6am).
 * `tmax` (string): Upper bound on x-axis; don't show data after this date; using yyyy-mm-dd date format. (In Graph Settings this is 'X-max')
 * `tags` (array): A list of the goal's tags.
 
-One of the three fields `goaldate`, `goalval`, and `rate` will return a null value.
+<em id="one-of-three">A note about rate, date, and val:</em> One of the three fields `goaldate`, `goalval`, and `rate` will return a null value.
 This indicates that the value is calculated based on the other two fields, as selected by the user.
 
-The goal types are shorthand for a collection of settings of more fundamental goal attributes.
+<em id="goal-types">A detailed note about goal types:</em> The goal types are shorthand for a collection of settings of more fundamental goal attributes.
 Note that changing the goal type of an already-created goal has no effect on those fundamental goal attributes.
 The following table lists what those attributes are.
 
