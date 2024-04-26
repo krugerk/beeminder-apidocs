@@ -304,6 +304,7 @@ thumb_url,
 goal_type,
 autodata,
 losedate,
+urgencykey,
 deadline,
 leadtime,
 alertstart,
@@ -412,6 +413,7 @@ A Goal object includes everything about a specific goal for a specific user, inc
  - `drinker`: Do Less
  - `custom`: Full access to the underlying goal parameters
 * `losedate` (number): Unix timestamp of derailment. When you'll cross the bright red line if nothing is reported.
+* `urgencykey` (string): Sort by this key (as ascii or unicode) to put the goals in order of decreasing urgency. This is the order the goals list comes in. (Detailed info [on the blog](https://blog.beeminder.com/urgency)).
 * `queued` (boolean): Whether the graph is currently being updated to reflect new data.
 * `secret` (boolean): Whether you have to be logged in as owner of the goal to view it. Default: `false`.
 * `datapublic` (boolean): Whether you have to be logged in as the owner of the goal to view the datapoints. Default: `false`.
